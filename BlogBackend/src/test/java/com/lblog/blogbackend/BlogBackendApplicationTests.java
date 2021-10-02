@@ -1,4 +1,4 @@
-package com.work.blogbackend;
+package com.lblog.blogbackend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
