@@ -1,6 +1,7 @@
 package com.lblog.blogbackend.Controller;
 
 import com.lblog.blogbackend.service.ArticleService;
+import com.lblog.blogbackend.service.CommentService;
 import com.lblog.blogbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,6 @@ public class UserController {
     @Autowired
     private ArticleService articleService;
 
-//    @Autowired
-//    private CommentService commentService;
+    @Autowired
+    private CommentService commentService;
 }
