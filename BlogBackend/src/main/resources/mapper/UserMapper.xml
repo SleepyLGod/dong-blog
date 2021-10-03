@@ -1,11 +1,148 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lblog.blogbackend.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.lblog.blogbackend.entity.UserEntity">
+        <id column="id" property="userId" jdbcType="INTEGER"/>
+        <result column="name" property="userName" jdbcType="VARCHAR"/>
+        <result column="password" property="userPass" jdbcType="VARCHAR"/>
+        <result column="nickname" property="userNickname" jdbcType="VARCHAR"/>
+        <result column="email" property="userEmail" jdbcType="VARCHAR"/>
+        <result column="url" property="userUrl" jdbcType="VARCHAR"/>
+        <result column="avatar" property="userAvatar" jdbcType="VARCHAR"/>
+        <result column="ip" property="userIp" jdbcType="VARCHAR"/>
+        <result column="register_time" property="userRegisterTime" jdbcType="TIMESTAMP"/>
+        <result column="last_login_time" property="userLastLoginTime" jdbcType="TIMESTAMP"/>
+        <result column="status" property="userStatus" jdbcType="INTEGER"/>
+        <result column="role" property="userRole" jdbcType="VARCHAR"/>
+        <result column="birth" property="userBirth" jdbcType="DATE"/>
+        <result column="age" property="userAge" jdbcType="INTEGER"/>
+        <result column="tele" property="userTele" jdbcType="VARCHAR"/>
+    </resultMap>
 
-    <select id="listUser"
-            parameterType="com.lblog.blogbackend.entity.UserEntity"
-            resultType="java.util.LinkedHashMap">
-       select * from user
+    <sql id="tb">user</sql>
+
+    <sql id="Base_Column_List">
+        id, name, password, nickname, email, url, avatar,
+        ip, register_time, last_login_time, status, role, birth, age, tele
+    </sql>
+
+    <select id="getUserById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from <include refid="tb"/>
+        where id = #{userId,jdbcType=INTEGER}
     </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from
+        <include refid="tb"/>
+        where id = #{userId,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.lblog.blogbackend.entity.UserEntity" useGeneratedKeys="true" keyProperty="userId">
+        insert into
+        <include refid="tb"/>
+        (id, name, password, nickname, email, url, avatar, ip,
+        register_time, last_login_time, status, role, birth, age, tele)
+        values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userPass,jdbcType=VARCHAR},
+        #{userNickname,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR}, #{userUrl,jdbcType=VARCHAR},
+        #{userAvatar,jdbcType=VARCHAR}, #{userIp,jdbcType=VARCHAR}, #{userRegisterTime,jdbcType=TIMESTAMP},
+        #{userLastLoginTime,jdbcType=TIMESTAMP}, #{userStatus,jdbcType=INTEGER}, #{userRole,jdbcType=VARCHAR},
+        #{userBirth,jdbcType=DATE}, #{userAge,jdbcType=INTEGER}, #{userTele,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="update" parameterType="com.lblog.blogbackend.entity.UserEntity">
+        update
+        <include refid="tb"/>
+        <set>
+            <if test="userName != null">name = #{userName,jdbcType=VARCHAR},</if>
+            <if test="userPass != null">pass = #{userPass,jdbcType=VARCHAR},</if>
+            <if test="userNickname != null">nickname = #{userNickname,jdbcType=VARCHAR},</if>
+            <if test="userEmail != null">email = #{userEmail,jdbcType=VARCHAR},</if>
+            <if test="userUrl != null">url = #{userUrl,jdbcType=VARCHAR},</if>
+            <if test="userAvatar != null">avatar = #{userAvatar,jdbcType=VARCHAR},</if>
+            <if test="userIp != null">ip = #{userIp,jdbcType=VARCHAR},</if>
+            <if test="userRegisterTime != null">register_time = #{userRegisterTime,jdbcType=TIMESTAMP},</if>
+            <if test="userLastLoginTime != null">last_login_time = #{userLastLoginTime,jdbcType=TIMESTAMP},</if>
+            <if test="userStatus != null">status = #{userStatus,jdbcType=INTEGER},</if>
+            <if test="userRole != null">role = #{userRole,jdbcType=VARCHAR},</if>
+            <if test="userBirth != null">birth = #{userBirth,jdbcType=DATE},</if>
+            <if test="userAge != null">age = #{userAge,jdbcType=INTEGER},</if>
+            <if test="userTele != null">tele = #{userTele,jdbcType=VARCHAR}</if>
+        </set>
+        where id = #{userId,jdbcType=INTEGER}
+    </update>
+
+    <!--用户列表查询-->
+    <select id="listUser" parameterType="com.lblog.blogbackend.entity.UserEntity"
+            resultType="com.lblog.blogbackend.entity.UserEntity">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        <include refid="tb"/>
+        ORDER BY `status` ASC
+    </select>
+
+    <!--根据用户名或邮箱获得用户-->
+    <select id="getUserByNameOrEmail" parameterType="String" resultType="com.lblog.blogbackend.entity.UserEntity">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        <include refid="tb"/>
+        <where>
+            name=#{value} OR email=#{value}
+        </where>
+        AND status>0
+        limit 1
+    </select>
+
+    <!--根据用户名查用户-->
+    <select id="getUserByName" parameterType="String" resultType="com.lblog.blogbackend.entity.UserEntity">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        <include refid="tb"/>
+        <where>
+            name=#{value}
+        </where>
+        limit 1
+    </select>
+
+    <!--根据Email查用户-->
+    <select id="getUserByEmail" parameterType="String" resultType="com.lblog.blogbackend.entity.UserEntity">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        <include refid="tb"/>
+        <where>
+            email=#{value}
+        </where>
+        limit 1
+    </select>
+
+    <!--根据用户名和电话号码查询用户-->
+    <select id="getUserByNameOrTele" parameterType="String" resultType="com.lblog.blogbackend.entity.UserEntity">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        <include refid="tb"/>
+        <where>
+            name=#{value} OR tele=#{value}
+        </where>
+        limit 1
+    </select>
+
+    <!--根据tele查用户-->
+    <select id="getUserByTele" parameterType="String" resultType="com.lblog.blogbackend.entity.UserEntity">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        <include refid="tb"/>
+        <where>
+            tele=#{value}
+        </where>
+        limit 1
+    </select>
+
 
 </mapper>

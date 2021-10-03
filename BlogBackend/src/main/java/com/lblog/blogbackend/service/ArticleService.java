@@ -91,18 +91,6 @@ public interface ArticleService {
      */
     void deleteArticle(Integer id);
 
-//    /**
-//     * 分页显示
-//     *
-//     * @param pageIndex 第几页开始
-//     * @param pageSize  一页显示多少
-//     * @param criteria  查询条件
-//     * @return 文章列表
-//     */
-//    PageInfo<ArticleEntity> pageArticle(Integer pageIndex,
-//                                  Integer pageSize,
-//                                  HashMap<String, Object> criteria);
-
     /**
      * 文章详情页面显示
      *

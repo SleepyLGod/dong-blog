@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lblog.blogbackend.mapper.PersonalInfoMapper" >
+    <resultMap id="BaseResultMap" type="com.lblog.blogbackend.entity.PersonalInfoEntity" >
+        <id column="self_id" property="selfId" jdbcType="INTEGER" />
+        <result column="self_name" property="selfName" jdbcType="VARCHAR" />
+        <result column="self_url" property="selfUrl" jdbcType="VARCHAR" />
+        <result column="self_level" property="selfLevel" jdbcType="INTEGER" />
+        <result column="self_icon" property="selfIcon" jdbcType="VARCHAR" />
+        <result column="self_order" property="selfOrder" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        self_id, self_name, self_url, self_level, self_icon, self_order
+    </sql>
+    <sql id="lhd">personal_info</sql>
+
+    <select id="getPersonalInfoById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from <include refid="lhd"/>
+        where self_id = #{selfId,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer" >
+        delete from <include refid="lhd"/>
+        where self_id = #{selfId,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.lblog.blogbackend.entity.PersonalInfoEntity" useGeneratedKeys="true" keyProperty="menuId">
+        insert into <include refid="lhd"/>
+        (self_id, self_name, self_url,
+        self_level, self_icon, self_order)
+        values (#{selfId,jdbcType=INTEGER}, #{selfName,jdbcType=VARCHAR}, #{selfUrl,jdbcType=VARCHAR},
+        #{selfLevel,jdbcType=INTEGER}, #{selfIcon,jdbcType=VARCHAR}, #{selfOrder,jdbcType=INTEGER})
+    </insert>
+
+    <update id="update" parameterType="com.lblog.blogbackend.entity.PersonalInfoEntity" >
+        update <include refid="lhd"/>
+        <set >
+            <if test="selfName != null" > self_name = #{selfName,jdbcType=VARCHAR},</if>
+            <if test="selfUrl != null" >self_url = #{selfUrl,jdbcType=VARCHAR},</if>
+            <if test="selfLevel != null" >self_level = #{selfLevel,jdbcType=INTEGER},</if>
+            <if test="selfIcon != null" >self_icon = #{selfIcon,jdbcType=VARCHAR},</if>
+            <if test="selfOrder != null" >self_order = #{selfOrder,jdbcType=INTEGER},</if>
+        </set>
+        where self_id = #{selfId,jdbcType=INTEGER}
+    </update>
+
+    <!--获得菜单列表-->
+    <select id="listPersonalInfo"  resultType="com.lblog.blogbackend.entity.PersonalInfoEntity">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM <include refid="lhd"/>
+        ORDER BY self_order DESC, self_id ASC
+    </select>
+</mapper>
