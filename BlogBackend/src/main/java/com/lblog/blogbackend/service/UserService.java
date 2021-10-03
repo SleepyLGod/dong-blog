@@ -1,11 +1,11 @@
 package com.lblog.blogbackend.service;
 
-import com.lblog.blogbackend.entity.UserEntity;
-import org.springframework.stereotype.Service;
+import com.lblog.blogbackend.model.entity.UserEntity;
 
 import java.util.List;
 
 public interface UserService {
+
     /**
      * 获得用户列表
      *
@@ -82,5 +82,6 @@ public interface UserService {
      * @return 用户
      */
     UserEntity getUserByTele(String tele);
+
 }
 

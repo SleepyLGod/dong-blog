@@ -1,6 +1,6 @@
 package com.lblog.blogbackend.service;
 
-import com.lblog.blogbackend.entity.CategoryEntity;
+import com.lblog.blogbackend.model.entity.CategoryEntity;
 
 import java.util.List;
 

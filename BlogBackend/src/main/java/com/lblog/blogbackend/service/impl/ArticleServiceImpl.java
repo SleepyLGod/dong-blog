@@ -1,21 +1,17 @@
 package com.lblog.blogbackend.service.impl;
 
-import com.lblog.blogbackend.entity.*;
+import com.lblog.blogbackend.constant.enums.CommentStatusEnums;
+import com.lblog.blogbackend.model.entity.*;
 import com.lblog.blogbackend.mapper.*;
 import com.lblog.blogbackend.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.security.web.PortResolverImpl;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import lombok.extern.slf4j.Slf4j;
-import java.io.IOException;
 
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
@@ -171,61 +167,82 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleEntity> listArticleByViewCount(Integer limit) {
-        return null;
+        return articleMapper.listArticleByViewCount(limit);
     }
 
     @Override
     public ArticleEntity getAfterArticle(Integer id) {
-        return null;
+        return articleMapper.getAfterArticle(id);
     }
 
     @Override
     public ArticleEntity getPreArticle(Integer id) {
-        return null;
+        return articleMapper.getPreArticle(id);
     }
 
     @Override
     public List<ArticleEntity> listRandomArticle(Integer limit) {
-        return null;
+        return articleMapper.listRandomArticle(limit);
     }
 
     @Override
     public List<ArticleEntity> listArticleByCommentCount(Integer limit) {
-        return null;
+        return articleMapper.listArticleByCommentCount(limit);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void insertArticle(ArticleEntity article) {
-
+        article.setArticleIsComment(CommentStatusEnums.ALLOW.getValue());
+        article.setArticleCommentCount(0);
+        article.setArticleViews(0);
+        article.setArticleLikeCount(0);;
+        article.setArticleOrder(1);
+        article.setArticleCreateTime(new Date());
+        article.setArticleUpdateTime(new Date());
+        articleMapper.insert(article);
+        for (int i = 0; i<article.getCategoryList().size(); ++i) {
+            ArticleCategoryAssEntity articleCategoryAssEntity = new ArticleCategoryAssEntity(article.getArticleId(),article.getCategoryList().get(i).getCategoryId());
+            articleCategoryAssMapper.insert(articleCategoryAssEntity);
+        }
+        for(int j = 0; j < article.getTagList().size(); ++j) {
+            ArticleTagAssEntity articleTagAssEntity = new ArticleTagAssEntity(article.getArticleId(),article.getTagList().get(j).getTagId());
+            articleTagAssMapper.insert(articleTagAssEntity);
+        }
     }
 
     @Override
     public void updateCommentCount(Integer articleId) {
-
+        articleMapper.updateCommentCount(articleId);
     }
 
     @Override
     public ArticleEntity getLastUpdateArticle() {
-        return null;
+        return articleMapper.getLastUpdateArticle();
     }
 
     @Override
     public List<ArticleEntity> listArticleByCategoryId(Integer cateId, Integer limit) {
-        return null;
+        return articleMapper.findArticleByCategoryId(cateId,limit);
     }
 
     @Override
     public List<ArticleEntity> listArticleByCategoryIds(List<Integer> cateIds, Integer limit) {
-        return null;
+        if(cateIds == null || cateIds.size() == 0) {
+            return null;
+        }
+        else {
+            return articleMapper.findArticleByCategoryIds(cateIds, limit);
+        }
     }
 
     @Override
     public List<Integer> listCategoryIdByArticleId(Integer articleId) {
-        return null;
+        return articleCategoryAssMapper.selectCategoryIdByArticleId(articleId);
     }
 
     @Override
     public List<ArticleEntity> listAllNotWithContent() {
-        return null;
+        return articleMapper.listAllNotWithContent();
     }
 }

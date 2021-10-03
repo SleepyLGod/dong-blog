@@ -1,7 +1,6 @@
 package com.lblog.blogbackend.service;
 
-import com.lblog.blogbackend.entity.ArticleEntity;
-import org.springframework.stereotype.Service;
+import com.lblog.blogbackend.model.entity.ArticleEntity;
 
 import java.util.HashMap;
 import java.util.List;

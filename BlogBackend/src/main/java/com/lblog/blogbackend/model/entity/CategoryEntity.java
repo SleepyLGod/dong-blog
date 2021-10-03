@@ -1,4 +1,4 @@
-package com.lblog.blogbackend.entity;
+package com.lblog.blogbackend.model.entity;
 
 import lombok.Builder;
 import lombok.Data;

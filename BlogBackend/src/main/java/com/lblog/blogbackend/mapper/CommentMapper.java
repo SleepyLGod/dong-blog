@@ -1,7 +1,7 @@
 package com.lblog.blogbackend.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.lblog.blogbackend.entity.CommentEntity;
+import com.lblog.blogbackend.model.entity.CommentEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

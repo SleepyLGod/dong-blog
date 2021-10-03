@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lblog.blogbackend.mapper.UserMapper">
-    <resultMap id="BaseResultMap" type="com.lblog.blogbackend.entity.UserEntity">
+    <resultMap id="BaseResultMap" type="com.lblog.blogbackend.model.entity.UserEntity">
         <id column="id" property="userId" jdbcType="INTEGER"/>
         <result column="name" property="userName" jdbcType="VARCHAR"/>
         <result column="password" property="userPass" jdbcType="VARCHAR"/>
@@ -39,7 +39,7 @@
         where id = #{userId,jdbcType=INTEGER}
     </delete>
 
-    <insert id="insert" parameterType="com.lblog.blogbackend.entity.UserEntity" useGeneratedKeys="true" keyProperty="userId">
+    <insert id="insert" parameterType="com.lblog.blogbackend.model.entity.UserEntity" useGeneratedKeys="true" keyProperty="userId">
         insert into
         <include refid="tb"/>
         (id, name, password, nickname, email, url, avatar, ip,
@@ -51,7 +51,7 @@
         #{userBirth,jdbcType=DATE}, #{userAge,jdbcType=INTEGER}, #{userTele,jdbcType=VARCHAR})
     </insert>
 
-    <update id="update" parameterType="com.lblog.blogbackend.entity.UserEntity">
+    <update id="update" parameterType="com.lblog.blogbackend.model.entity.UserEntity">
         update
         <include refid="tb"/>
         <set>
@@ -74,8 +74,8 @@
     </update>
 
     <!--用户列表查询-->
-    <select id="listUser" parameterType="com.lblog.blogbackend.entity.UserEntity"
-            resultType="com.lblog.blogbackend.entity.UserEntity">
+    <select id="listUser" parameterType="com.lblog.blogbackend.model.entity.UserEntity"
+            resultType="com.lblog.blogbackend.model.entity.UserEntity">
         SELECT
         <include refid="Base_Column_List"/>
         FROM
@@ -84,7 +84,7 @@
     </select>
 
     <!--根据用户名或邮箱获得用户-->
-    <select id="getUserByNameOrEmail" parameterType="String" resultType="com.lblog.blogbackend.entity.UserEntity">
+    <select id="getUserByNameOrEmail" parameterType="String" resultType="com.lblog.blogbackend.model.entity.UserEntity">
         SELECT
         <include refid="Base_Column_List"/>
         FROM
@@ -97,7 +97,7 @@
     </select>
 
     <!--根据用户名查用户-->
-    <select id="getUserByName" parameterType="String" resultType="com.lblog.blogbackend.entity.UserEntity">
+    <select id="getUserByName" parameterType="String" resultType="com.lblog.blogbackend.model.entity.UserEntity">
         SELECT
         <include refid="Base_Column_List"/>
         FROM
@@ -109,7 +109,7 @@
     </select>
 
     <!--根据Email查用户-->
-    <select id="getUserByEmail" parameterType="String" resultType="com.lblog.blogbackend.entity.UserEntity">
+    <select id="getUserByEmail" parameterType="String" resultType="com.lblog.blogbackend.model.entity.UserEntity">
         SELECT
         <include refid="Base_Column_List"/>
         FROM
@@ -121,7 +121,7 @@
     </select>
 
     <!--根据用户名和电话号码查询用户-->
-    <select id="getUserByNameOrTele" parameterType="String" resultType="com.lblog.blogbackend.entity.UserEntity">
+    <select id="getUserByNameOrTele" parameterType="String" resultType="com.lblog.blogbackend.model.entity.UserEntity">
         SELECT
         <include refid="Base_Column_List"/>
         FROM
@@ -133,7 +133,7 @@
     </select>
 
     <!--根据tele查用户-->
-    <select id="getUserByTele" parameterType="String" resultType="com.lblog.blogbackend.entity.UserEntity">
+    <select id="getUserByTele" parameterType="String" resultType="com.lblog.blogbackend.model.entity.UserEntity">
         SELECT
         <include refid="Base_Column_List"/>
         FROM

@@ -1,8 +1,8 @@
 package com.lblog.blogbackend.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.lblog.blogbackend.entity.ArticleTagAssEntity;
-import com.lblog.blogbackend.entity.TagEntity;
+import com.lblog.blogbackend.model.entity.ArticleTagAssEntity;
+import com.lblog.blogbackend.model.entity.TagEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

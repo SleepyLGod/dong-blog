@@ -1,7 +1,7 @@
 package com.lblog.blogbackend.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.lblog.blogbackend.entity.PersonalInfoEntity;
+import com.lblog.blogbackend.model.entity.PersonalInfoEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

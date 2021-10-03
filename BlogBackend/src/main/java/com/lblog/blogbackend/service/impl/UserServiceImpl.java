@@ -1,6 +1,6 @@
 package com.lblog.blogbackend.service.impl;
 
-import com.lblog.blogbackend.entity.UserEntity;
+import com.lblog.blogbackend.model.entity.UserEntity;
 import com.lblog.blogbackend.mapper.ArticleMapper;
 import com.lblog.blogbackend.mapper.CommentMapper;
 import com.lblog.blogbackend.mapper.UserMapper;
@@ -96,4 +96,5 @@ public class UserServiceImpl implements UserService {
     public UserEntity getUserByTele(String tele) {
         return userMapper.getUserByTele(tele);
     }
+
 }

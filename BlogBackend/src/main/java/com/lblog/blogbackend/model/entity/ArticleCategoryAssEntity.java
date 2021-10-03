@@ -1,4 +1,4 @@
-package com.lblog.blogbackend.entity;
+package com.lblog.blogbackend.model.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
