@@ -11,7 +11,7 @@ import java.util.List;
 public interface UserMapper extends BaseMapper<UserEntity> {
 
     /**
-     * 根据ID删除
+     * 根据ID删除用户
      *
      * @param userId 用户ID
      * @return 影响行数
@@ -19,13 +19,12 @@ public interface UserMapper extends BaseMapper<UserEntity> {
     int deleteById(Integer userId);
 
     /**
-     * 添加
+     * 添加用户
      *
      * @param user 用户
      * @return 影响行数
      */
     int insert(UserEntity user);
-
 
     /**
      * 根据ID查询
@@ -43,14 +42,12 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      */
     int update(UserEntity user);
 
-
     /**
      * 获得用户列表
      *
      * @return  用户列表
      */
-    List<UserEntity> listUser() ;
-
+    List<UserEntity> listUser();
 
     /**
      * 根据用户名或Email获得用户
@@ -58,7 +55,7 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      * @param str 用户名或Email
      * @return 用户
      */
-    UserEntity getUserByNameOrEmail(String str) ;
+    UserEntity getUserByNameOrEmail(String str);
 
     /**
      * 根据用户名查用户
@@ -66,7 +63,7 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      * @param name 用户名
      * @return 用户
      */
-    UserEntity getUserByName(String name) ;
+    UserEntity getUserByName(String name);
 
     /**
      * 根据Email查询用户
@@ -74,7 +71,7 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      * @param email 邮箱
      * @return 用户
      */
-    UserEntity getUserByEmail(String email) ;
+    UserEntity getUserByEmail(String email);
 
     /**
      * 根据用户名和电话号码查询用户
@@ -91,4 +88,5 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      * @return 用户
      */
     UserEntity getUserByTele(String tele);
+
 }

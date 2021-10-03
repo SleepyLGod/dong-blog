@@ -82,6 +82,7 @@
             </foreach>
         </if>
     </delete>
+
     <delete id="deleteByUserId">
         DELETE FROM <include refid="lhd"/>
         WHERE article_user_id = #{userId}
@@ -89,20 +90,20 @@
 
     <insert id="insert" parameterType="com.lblog.blogbackend.entity.ArticleEntity" useGeneratedKeys="true"
             keyProperty="articleId">
-        insert into
-        <include refid="lhd"/>
-        (article_user_id, article_title,
-        article_views, article_comment_count,
-        article_like_count, article_create_time, article_update_time,
-        article_is_comment, article_status, article_order,
-        article_content,article_thumbnail)
-        values (#{articleUserId,jdbcType=INTEGER}, #{articleTitle,jdbcType=VARCHAR},
-        #{articleViews,jdbcType=INTEGER},
-        #{articleCommentCount,jdbcType=INTEGER},
-        #{articleLikeCount,jdbcType=INTEGER}, #{articleCreateTime,jdbcType=TIMESTAMP},
-        #{articleUpdateTime,jdbcType=TIMESTAMP},
-        #{articleIsComment,jdbcType=INTEGER}, #{articleStatus,jdbcType=INTEGER}, #{articleOrder,jdbcType=INTEGER},
-        #{articleContent,jdbcType=LONGVARCHAR}, #{articleThumbnail})
+            insert into
+            <include refid="lhd"/>
+            (article_user_id, article_title,
+            article_views, article_comment_count,
+            article_like_count, article_create_time, article_update_time,
+            article_is_comment, article_status, article_order,
+            article_content,article_thumbnail)
+            values (#{articleUserId,jdbcType=INTEGER}, #{articleTitle,jdbcType=VARCHAR},
+            #{articleViews,jdbcType=INTEGER},
+            #{articleCommentCount,jdbcType=INTEGER},
+            #{articleLikeCount,jdbcType=INTEGER}, #{articleCreateTime,jdbcType=TIMESTAMP},
+            #{articleUpdateTime,jdbcType=TIMESTAMP},
+            #{articleIsComment,jdbcType=INTEGER}, #{articleStatus,jdbcType=INTEGER}, #{articleOrder,jdbcType=INTEGER},
+            #{articleContent,jdbcType=LONGVARCHAR}, #{articleThumbnail})
     </insert>
 
 

@@ -41,7 +41,7 @@ public interface UserService {
      * @param user 用户
      * @return 用户
      */
-    UserEntity insetUser(UserEntity user);
+    UserEntity insertUser(UserEntity user);
 
     /**
      * 根据用户名和邮箱查询用户

@@ -10,6 +10,7 @@ import java.util.List;
 
 @Mapper
 public interface ArticleMapper extends BaseMapper<ArticleEntity> {
+
     /**
      * 根据文章ID删除
      *
@@ -96,7 +97,7 @@ public interface ArticleMapper extends BaseMapper<ArticleEntity> {
     ArticleEntity getArticleByStatusAndId(@Param(value = "status") Integer status, @Param(value = "id") Integer id);
 
     /**
-     * 获得访问最多的文章(猜你喜欢)
+     * 获得访问最多的文章
      *
      * @param limit 查询数量
      * @return 文章列表
@@ -134,7 +135,6 @@ public interface ArticleMapper extends BaseMapper<ArticleEntity> {
      * @return 文章列表
      */
     List<ArticleEntity> listArticleByCommentCount(@Param(value = "limit") Integer limit);
-
 
     /**
      * 更新文章的评论数

@@ -10,12 +10,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
+    // 自动注入容器
     @Autowired
     private UserMapper userMapper;
 
@@ -31,51 +33,67 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserEntity> ListUser() {
         List<UserEntity> userEntities = userMapper.listUser();
-        return null;
+        for(int i = 0; i < userEntities.size(); ++i) {
+            // 个人博文数目
+            Integer articleCount = articleMapper.countArticleByUser(userEntities.get(i).getUserId());
+            userEntities.get(i).setArticleCount(articleCount);
+        }
+        return userEntities;
     }
 
     @Override
     public UserEntity getUserById(Integer id) {
-        return null;
+        return userMapper.getUserById(id);
     }
 
     @Override
     public void updateUser(UserEntity user) {
-
+        userMapper.update(user);
     }
 
     @Override
-    public void deleteUser(Integer id) {
-
+    public void deleteUser(Integer id) { // 分别删除用户信息，用户评论、用户博文
+        userMapper.deleteById(id);
+        commentMapper.deleteByUserId(id);
+        if(articleMapper.listArticleIdsByUserId(id) != null &&
+            articleMapper.listArticleIdsByUserId(id).size() >0) {
+            for(Integer articleId : articleMapper.listArticleIdsByUserId(id)) {
+                articleService.deleteArticle(articleId);
+            }
+        }
     }
 
     @Override
-    public UserEntity insetUser(UserEntity user) {
-        return null;
+    public UserEntity insertUser(UserEntity user) {
+        // 更新用户登录时间
+        user.setUserRegisterTime(new Date());
+        // 添加用户
+        userMapper.insert(user);
+        return user;
     }
 
     @Override
     public UserEntity getUserByNameOrEmail(String str) {
-        return null;
+        return userMapper.getUserByNameOrEmail(str);
     }
 
     @Override
     public UserEntity getUserByNameOrTele(String str) {
-        return null;
+        return userMapper.getUserByNameOrTele(str);
     }
 
     @Override
     public UserEntity getUserByName(String name) {
-        return null;
+        return userMapper.getUserByName(name);
     }
 
     @Override
     public UserEntity getUserByEmail(String email) {
-        return null;
+        return userMapper.getUserByEmail(email);
     }
 
     @Override
     public UserEntity getUserByTele(String tele) {
-        return null;
+        return userMapper.getUserByTele(tele);
     }
 }
