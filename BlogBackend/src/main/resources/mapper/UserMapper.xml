@@ -19,7 +19,7 @@
         <result column="tele" property="userTele" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <sql id="tb">user</sql>
+    <sql id="lhd">user</sql>
 
     <sql id="Base_Column_List">
         id, name, password, nickname, email, url, avatar,
@@ -29,19 +29,19 @@
     <select id="getUserById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from <include refid="tb"/>
+        from <include refid="lhd"/>
         where id = #{userId,jdbcType=INTEGER}
     </select>
 
     <delete id="deleteById" parameterType="java.lang.Integer">
         delete from
-        <include refid="tb"/>
+        <include refid="lhd"/>
         where id = #{userId,jdbcType=INTEGER}
     </delete>
 
     <insert id="insert" parameterType="com.lblog.blogbackend.model.entity.UserEntity" useGeneratedKeys="true" keyProperty="userId">
         insert into
-        <include refid="tb"/>
+        <include refid="lhd"/>
         (id, name, password, nickname, email, url, avatar, ip,
         register_time, last_login_time, status, role, birth, age, tele)
         values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userPass,jdbcType=VARCHAR},
@@ -53,7 +53,7 @@
 
     <update id="update" parameterType="com.lblog.blogbackend.model.entity.UserEntity">
         update
-        <include refid="tb"/>
+        <include refid="lhd"/>
         <set>
             <if test="userName != null">name = #{userName,jdbcType=VARCHAR},</if>
             <if test="userPass != null">pass = #{userPass,jdbcType=VARCHAR},</if>
@@ -79,7 +79,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM
-        <include refid="tb"/>
+        <include refid="lhd"/>
         ORDER BY `status` ASC
     </select>
 
@@ -88,7 +88,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM
-        <include refid="tb"/>
+        <include refid="lhd"/>
         <where>
             name=#{value} OR email=#{value}
         </where>
@@ -101,7 +101,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM
-        <include refid="tb"/>
+        <include refid="lhd"/>
         <where>
             name=#{value}
         </where>
@@ -113,7 +113,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM
-        <include refid="tb"/>
+        <include refid="lhd"/>
         <where>
             email=#{value}
         </where>
@@ -125,7 +125,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM
-        <include refid="tb"/>
+        <include refid="lhd"/>
         <where>
             name=#{value} OR tele=#{value}
         </where>
@@ -137,7 +137,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM
-        <include refid="tb"/>
+        <include refid="lhd"/>
         <where>
             tele=#{value}
         </where>

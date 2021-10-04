@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-@Builder
 @TableName("article")
 public class ArticleEntity implements Serializable{
 
@@ -64,4 +63,5 @@ public class ArticleEntity implements Serializable{
     private List<TagEntity> tagList;
 
     private List<CategoryEntity> categoryList;
+
 }

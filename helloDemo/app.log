@@ -487,3 +487,19 @@
 2021-10-01 21:12:06.874  INFO 63230 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2021-10-01 21:12:06.874  INFO 63230 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2021-10-01 21:12:06.875  INFO 63230 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2021-10-04 02:49:11.210  INFO 287979 --- [restartedMain] c.h.hellodemo.HelloDemoApplication       : Starting HelloDemoApplication using Java 17 on odin-Lenovo-Legion-R7000P2020H with PID 287979 (/home/odin/Git_repos/Dian_blog_backend/helloDemo/target/classes started by odin in /home/odin/Git_repos/Dian_blog_backend/helloDemo)
+2021-10-04 02:49:11.212  INFO 287979 --- [restartedMain] c.h.hellodemo.HelloDemoApplication       : No active profile set, falling back to default profiles: default
+2021-10-04 02:49:11.257  INFO 287979 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-10-04 02:49:11.258  INFO 287979 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-10-04 02:49:11.840  INFO 287979 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2021-10-04 02:49:11.846  INFO 287979 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-10-04 02:49:11.847  INFO 287979 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2021-10-04 02:49:11.881  INFO 287979 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-10-04 02:49:11.881  INFO 287979 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 623 ms
+2021-10-04 02:49:12.122  INFO 287979 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-10-04 02:49:12.140  INFO 287979 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2021-10-04 02:49:12.150  INFO 287979 --- [restartedMain] c.h.hellodemo.HelloDemoApplication       : Started HelloDemoApplication in 1.276 seconds (JVM running for 1.852)
+2021-10-04 02:49:19.402  INFO 287979 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-10-04 02:49:19.402  INFO 287979 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-10-04 02:49:19.403  INFO 287979 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2021-10-04 02:49:19.422  WARN 287979 --- [http-nio-8080-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required request parameter 'id' for method parameter type Integer is not present]

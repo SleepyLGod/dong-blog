@@ -14,7 +14,6 @@ import java.time.LocalDate;
 import java.util.Date;
 
 @Data
-@Builder
 @TableName("user")
 public class UserEntity implements Serializable {
 
