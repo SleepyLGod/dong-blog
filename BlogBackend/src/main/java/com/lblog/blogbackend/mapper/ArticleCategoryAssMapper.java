@@ -4,10 +4,12 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lblog.blogbackend.model.entity.ArticleCategoryAssEntity;
 import com.lblog.blogbackend.model.entity.CategoryEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Mapper
+@Repository
 public interface ArticleCategoryAssMapper /*extends BaseMapper<ArticleCategoryAssEntity>*/ {
 
         /**

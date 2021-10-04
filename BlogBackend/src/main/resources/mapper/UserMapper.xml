@@ -75,7 +75,7 @@
 
     <!--用户列表查询-->
     <select id="listUser" parameterType="com.lblog.blogbackend.model.entity.UserEntity"
-            resultType="com.lblog.blogbackend.model.entity.UserEntity">
+            resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM
@@ -84,13 +84,13 @@
     </select>
 
     <!--根据用户名或邮箱获得用户-->
-    <select id="getUserByNameOrEmail" parameterType="String" resultType="com.lblog.blogbackend.model.entity.UserEntity">
+    <select id="getUserByNameOrEmail" parameterType="String" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM
         <include refid="lhd"/>
         <where>
-            user_name=#{value} OR email=#{value}
+            user_name=#{userName,jdbcType=VARCHAR} OR email=#{userEmail,jdbcType=VARCHAR}
         </where>
         AND status>0
         limit 1
@@ -99,11 +99,12 @@
     <!--根据用户名查用户-->
     <select id="getUserByName" parameterType="String" resultType="com.lblog.blogbackend.model.entity.UserEntity">
         SELECT
-        user.*
+        id, user_name, password, nickname, email, url, avatar,
+        ip, register_time, last_login_time, status, user_role, birth, age, tele
         FROM
         <include refid="lhd"/>
         <where>
-            user_name=#{value}
+            user_name=#{userName,jdbcType=VARCHAR}
         </where>
         limit 1
     </select>
@@ -115,7 +116,7 @@
         FROM
         <include refid="lhd"/>
         <where>
-            email=#{value}
+            email=#{userEmail,jdbcType=VARCHAR}
         </where>
         limit 1
     </select>
@@ -127,7 +128,7 @@
         FROM
         <include refid="lhd"/>
         <where>
-            user_name=#{value} OR tele=#{value}
+            user_name=#{userName,jdbcType=VARCHAR} OR tele=#{userTele,jdbcType=VARCHAR}
         </where>
         limit 1
     </select>
@@ -139,7 +140,7 @@
         FROM
         <include refid="lhd"/>
         <where>
-            tele=#{value}
+            tele=#{userTele,jdbcType=VARCHAR}
         </where>
         limit 1
     </select>

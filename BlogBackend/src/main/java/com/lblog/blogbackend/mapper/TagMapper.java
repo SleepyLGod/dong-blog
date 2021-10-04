@@ -3,10 +3,12 @@ package com.lblog.blogbackend.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lblog.blogbackend.model.entity.TagEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Mapper
+@Repository
 public interface TagMapper /*extends BaseMapper<TagEntity> */{
     /**
      * 根据ID删除

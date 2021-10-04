@@ -46,6 +46,7 @@ public class AdminController {
     private TagService tagService;
 
     /*
+
     // adminPage
     @RequestMapping("/admin")
     public String index (Model model,HttpSession session) {
@@ -66,11 +67,13 @@ public class AdminController {
     public String registerPage() {
         return "Admin/register";
     }
+
     // loginPage
     @RequestMapping("/login")
     public String loginPage() {
         return "Admin/login";
     }
+
     */
 
     // registerVerify
@@ -122,7 +125,8 @@ public class AdminController {
         String username = httpServletRequest.getParameter("username");
         String password = httpServletRequest.getParameter("password");
         String rememberme = httpServletRequest.getParameter("rememberme");
-        UserEntity user = userService.getUserByNameOrEmail(username);
+        UserEntity user = new UserEntity();
+        user = userService.getUserByName(username);
         if(user == null) {
             stringObjectMap.put("isSuc",0);
             stringObjectMap.put("tip","用户名无效!");
@@ -154,6 +158,7 @@ public class AdminController {
         }
         return new JSONObject(stringObjectMap).toString();
     }
+
 
     // logout:
     @RequestMapping(value = "/admin/logout")

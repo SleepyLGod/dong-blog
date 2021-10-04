@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "mybatis-plus.global-config.logic-delete-value",
+      "type": "java.lang.String",
+      "description": "Description for mybatis-plus.global-config.logic-delete-value."
+  }
+] }
