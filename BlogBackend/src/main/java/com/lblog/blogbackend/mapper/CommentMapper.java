@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Mapper
-public interface CommentMapper extends BaseMapper<CommentEntity> {
+public interface CommentMapper /*extends BaseMapper<CommentEntity>*/ {
 
     /**
      * 根据ID删除

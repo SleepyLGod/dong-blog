@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-public interface ArticleTagAssMapper extends BaseMapper<ArticleTagAssEntity> {
+public interface ArticleTagAssMapper /*extends BaseMapper<ArticleTagAssEntity>*/ {
 
     /**
      * 添加文章和标签关联记录

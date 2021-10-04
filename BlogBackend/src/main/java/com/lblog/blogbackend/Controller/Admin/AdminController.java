@@ -45,6 +45,7 @@ public class AdminController {
     @Autowired
     private TagService tagService;
 
+    /*
     // adminPage
     @RequestMapping("/admin")
     public String index (Model model,HttpSession session) {
@@ -70,9 +71,10 @@ public class AdminController {
     public String loginPage() {
         return "Admin/login";
     }
+    */
 
     // registerVerify
-    @RequestMapping(value = "/registerVerify",method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/registerVerify",method = RequestMethod.POST)
     @ResponseBody
     public JsonReturnDTO registerVerify(HttpServletRequest httpServletRequest) {
         String username = httpServletRequest.getParameter("username");
@@ -113,14 +115,14 @@ public class AdminController {
     }
 
     // loginVerify
-    @RequestMapping(value = "/loginVerify", method = RequestMethod.POST, produces = {"text/plain;charset=UTF-8"})
+    @RequestMapping(value = "/admin/loginVerify", method = RequestMethod.POST, produces = {"text/plain;charset=UTF-8"})
     @ResponseBody
     public String loginVerify (HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         Map<String,Object> stringObjectMap = new HashMap<String, Object>();
         String username = httpServletRequest.getParameter("username");
         String password = httpServletRequest.getParameter("password");
         String rememberme = httpServletRequest.getParameter("rememberme");
-        UserEntity user = userService.getUserByName(username);
+        UserEntity user = userService.getUserByNameOrEmail(username);
         if(user == null) {
             stringObjectMap.put("isSuc",0);
             stringObjectMap.put("tip","用户名无效!");

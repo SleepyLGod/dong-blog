@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Mapper
-public interface ArticleMapper extends BaseMapper<ArticleEntity> {
+public interface ArticleMapper /*extends BaseMapper<ArticleEntity>*/ {
 
     /**
      * 根据文章ID删除

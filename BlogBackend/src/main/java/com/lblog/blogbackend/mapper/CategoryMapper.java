@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
-public interface CategoryMapper extends BaseMapper<CategoryEntity> {
+public interface CategoryMapper /*extends BaseMapper<CategoryEntity>*/ {
 
     /**
      * 添加

@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-public interface ArticleCategoryAssMapper extends BaseMapper<ArticleCategoryAssEntity> {
+public interface ArticleCategoryAssMapper /*extends BaseMapper<ArticleCategoryAssEntity>*/ {
 
         /**
          * 添加文章和分类关联记录
