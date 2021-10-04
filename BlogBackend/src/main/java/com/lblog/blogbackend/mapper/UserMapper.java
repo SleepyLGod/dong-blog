@@ -66,6 +66,7 @@ public interface UserMapper/* extends BaseMapper<UserEntity> */{
      * @param name 用户名
      * @return 用户
      */
+    @Select("SELECT id, user_name, password, nickname, email, url, avatar, ip, register_time, last_login_time, status, user_role, birth, age, tele FROM user WHERE user_name = #{userName}")
     UserEntity getUserByName(String name);
 
     /**

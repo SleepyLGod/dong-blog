@@ -35,11 +35,8 @@ public class ArticleBackendController {
     @Autowired
     private CategoryService categoryService;
 
-    /**
-     * 后台文章列表显示
-     *
-     * @return modelAndView
-     */
+/*
+    // 后台文章列表显示
     @RequestMapping(value = "")
     public String index(@RequestParam(required = false) String status, Model model, HttpSession session) {
         HashMap<String, Object> criteria = new HashMap<>(1);
@@ -60,6 +57,7 @@ public class ArticleBackendController {
         model.addAttribute("tagList", tagList);
         return "Admin/Article/insert";
     }
+*/
 
     // 后台添加文章提交操作
     @RequestMapping(value = "/insertSubmit", method = RequestMethod.POST)
