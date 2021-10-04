@@ -3,7 +3,7 @@
 <mapper namespace="com.lblog.blogbackend.mapper.UserMapper">
     <resultMap id="BaseResultMap" type="com.lblog.blogbackend.model.entity.UserEntity">
         <id column="id" property="userId" jdbcType="INTEGER"/>
-        <result column="name" property="userName" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
         <result column="password" property="userPass" jdbcType="VARCHAR"/>
         <result column="nickname" property="userNickname" jdbcType="VARCHAR"/>
         <result column="email" property="userEmail" jdbcType="VARCHAR"/>
@@ -13,7 +13,7 @@
         <result column="register_time" property="userRegisterTime" jdbcType="TIMESTAMP"/>
         <result column="last_login_time" property="userLastLoginTime" jdbcType="TIMESTAMP"/>
         <result column="status" property="userStatus" jdbcType="INTEGER"/>
-        <result column="role" property="userRole" jdbcType="VARCHAR"/>
+        <result column="user_role" property="userRole" jdbcType="VARCHAR"/>
         <result column="birth" property="userBirth" jdbcType="DATE"/>
         <result column="age" property="userAge" jdbcType="INTEGER"/>
         <result column="tele" property="userTele" jdbcType="VARCHAR"/>
@@ -22,8 +22,8 @@
     <sql id="lhd">user</sql>
 
     <sql id="Base_Column_List">
-        id, name, password, nickname, email, url, avatar,
-        ip, register_time, last_login_time, status, role, birth, age, tele
+        id, user_name, password, nickname, email, url, avatar,
+        ip, register_time, last_login_time, status, user_role, birth, age, tele
     </sql>
 
     <select id="getUserById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -42,8 +42,8 @@
     <insert id="insert" parameterType="com.lblog.blogbackend.model.entity.UserEntity" useGeneratedKeys="true" keyProperty="userId">
         insert into
         <include refid="lhd"/>
-        (id, name, password, nickname, email, url, avatar, ip,
-        register_time, last_login_time, status, role, birth, age, tele)
+        (id, user_name, password, nickname, email, url, avatar, ip,
+        register_time, last_login_time, status, user_role, birth, age, tele)
         values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userPass,jdbcType=VARCHAR},
         #{userNickname,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR}, #{userUrl,jdbcType=VARCHAR},
         #{userAvatar,jdbcType=VARCHAR}, #{userIp,jdbcType=VARCHAR}, #{userRegisterTime,jdbcType=TIMESTAMP},
@@ -90,7 +90,7 @@
         FROM
         <include refid="lhd"/>
         <where>
-            name=#{value} OR email=#{value}
+            user_name=#{value} OR email=#{value}
         </where>
         AND status>0
         limit 1
@@ -99,11 +99,11 @@
     <!--根据用户名查用户-->
     <select id="getUserByName" parameterType="String" resultType="com.lblog.blogbackend.model.entity.UserEntity">
         SELECT
-        <include refid="Base_Column_List"/>
+        user.*
         FROM
         <include refid="lhd"/>
         <where>
-            name=#{value}
+            user_name=#{value}
         </where>
         limit 1
     </select>
@@ -127,7 +127,7 @@
         FROM
         <include refid="lhd"/>
         <where>
-            name=#{value} OR tele=#{value}
+            user_name=#{value} OR tele=#{value}
         </where>
         limit 1
     </select>

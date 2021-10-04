@@ -23,7 +23,7 @@ public class UserEntity implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer userId;
 
-    @TableField(value = "name")
+    @TableField(value = "user_name")
     private String userName;
 
     @TableField(value = "ip")
@@ -56,7 +56,7 @@ public class UserEntity implements Serializable {
     /**
      * 用户角色：admin/user
      */
-    @TableField(value = "role")
+    @TableField(value = "user_role")
     private String userRole;
 
     @TableField(value = "birth")

@@ -10,6 +10,7 @@ import com.lblog.blogbackend.model.entity.UserEntity;
 import com.lblog.blogbackend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -119,7 +120,7 @@ public class AdminController {
         String username = httpServletRequest.getParameter("username");
         String password = httpServletRequest.getParameter("password");
         String rememberme = httpServletRequest.getParameter("rememberme");
-        UserEntity user = userService.getUserByNameOrEmail(username);
+        UserEntity user = userService.getUserByName(username);
         if(user == null) {
             stringObjectMap.put("isSuc",0);
             stringObjectMap.put("tip","用户名无效!");
