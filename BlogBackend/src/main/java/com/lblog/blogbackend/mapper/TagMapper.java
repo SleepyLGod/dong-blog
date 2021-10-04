@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-public interface TagMapper extends BaseMapper<TagEntity> {
+public interface TagMapper /*extends BaseMapper<TagEntity> */{
     /**
      * 根据ID删除
      *

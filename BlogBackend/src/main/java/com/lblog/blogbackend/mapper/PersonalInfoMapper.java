@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-public interface PersonalInfoMapper extends BaseMapper<PersonalInfoEntity> {
+public interface PersonalInfoMapper/* extends BaseMapper<PersonalInfoEntity> */{
 
     /**
      * 删除
