@@ -12,7 +12,8 @@ import java.io.IOException;
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws IOException {
+    public boolean preHandle(HttpServletRequest request,
+                             HttpServletResponse response, Object o) throws IOException {
         // 根据session的用户来判断角色权限，转发不同页面
         if(request.getSession().getAttribute("user") == null) {
             response.sendRedirect("/login");
@@ -22,9 +23,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     }
 
     @Override
-    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) { }
+    public void postHandle(HttpServletRequest httpServletRequest,
+                           HttpServletResponse httpServletResponse,
+                           Object o, ModelAndView modelAndView) { }
 
     @Override
-    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) { }
+    public void afterCompletion(HttpServletRequest httpServletRequest,
+                                HttpServletResponse httpServletResponse,
+                                Object o, Exception e) { }
 
 }

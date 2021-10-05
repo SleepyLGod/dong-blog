@@ -96,18 +96,18 @@
         limit 1
     </select>
 
-<!--    &lt;!&ndash;根据用户名查用户&ndash;&gt;-->
-<!--    <select id="getUserByName" parameterType="String" resultType="com.lblog.blogbackend.model.entity.UserEntity">-->
-<!--        SELECT-->
-<!--        id, user_name, password, nickname, email, url, avatar,-->
-<!--        ip, register_time, last_login_time, status, user_role, birth, age, tele-->
-<!--        FROM-->
-<!--        <include refid="lhd"/>-->
-<!--        <where>-->
-<!--            user_name=#{userName,jdbcType=VARCHAR}-->
-<!--        </where>-->
-<!--        limit 1-->
-<!--    </select>-->
+    <!--根据用户名查用户-->
+    <select id="getUserByName" parameterType="String" resultType="com.lblog.blogbackend.model.entity.UserEntity">
+        SELECT
+        id, user_name, password, nickname, email, url, avatar,
+        ip, register_time, last_login_time, status, user_role, birth, age, tele
+        FROM
+        <include refid="lhd"/>
+        <where>
+            user_name=#{userName,jdbcType=VARCHAR}
+        </where>
+        limit 1
+    </select>
 
     <!--根据Email查用户-->
     <select id="getUserByEmail" parameterType="String" resultType="com.lblog.blogbackend.model.entity.UserEntity">

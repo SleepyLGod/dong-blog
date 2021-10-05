@@ -149,6 +149,9 @@ public class AdminController {
                 // 有效期为7天
                 nameCookie.setMaxAge(7*24*60*60);
                 pwdCookie .setMaxAge(7*24*60*60);
+                // 在该服务器下，任何项目，任何位置都能获取到cookie
+                nameCookie.setPath("/");
+                pwdCookie.setPath("/");
                 httpServletResponse.addCookie(nameCookie);
                 httpServletResponse.addCookie(pwdCookie);
             }
@@ -162,12 +165,14 @@ public class AdminController {
 
     // logout:
     @RequestMapping(value = "/admin/logout")
-    public String logout(HttpSession httpSession) {
+    public JsonReturnDTO logout(HttpSession httpSession) {
         httpSession.removeAttribute("user");
         httpSession.invalidate();
-        return "redirect:/login";
+        return new JsonReturnDTO().success("登出成功！再见！");
+        // return "redirect:/loginVerify";
     }
 
+    /*
     // 基本信息页面显示
     @RequestMapping(value = "/admin/personalProfile")
     public ModelAndView userPersonalProfile(HttpSession httpSession) {
@@ -197,6 +202,15 @@ public class AdminController {
         user.setUserId(dbUser.getUserId());
         userService.updateUser(user);
         return "redirect:/admin/personalProfile";
+    }
+     */
+
+    @RequestMapping(value = "/admin/personalProfile/save")
+    public JsonReturnDTO userPersonalProfileSave(UserEntity user, HttpSession httpSession) {
+        UserEntity dbUser = (UserEntity) httpSession.getAttribute("user");
+        user.setUserId(dbUser.getUserId());
+        userService.updateUser(user);
+        return new JsonReturnDTO().success("编辑个人信息成功！");
     }
 
 }

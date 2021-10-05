@@ -32,12 +32,7 @@ public class CommentController {
     @Autowired
     private ArticleService articleService;
 
-    /**
-     * 添加评论
-     *
-     * @param request
-     * @param comment
-     */
+    // 添加评论
     @RequestMapping(value = "/comment", method = {RequestMethod.POST})
     public JsonReturnDTO insertComment(HttpServletRequest request, CommentEntity comment, HttpSession session) {
         UserEntity user = (UserEntity) session.getAttribute("user");
@@ -48,9 +43,6 @@ public class CommentController {
         if (article == null) {
             return new JsonReturnDTO().fail("文章不存在");
         }
-
-
-        //添加评论
         comment.setCommentUserId(user.getUserId());
         comment.setCommentCreateTime(new Date());
         comment.setCommentIp(HttpUtils.getIpAddr(request));
@@ -60,10 +52,8 @@ public class CommentController {
             comment.setCommentRole(ArticleRoleEnums.VISITOR.getValue());
         }
         comment.setCommentAuthorAvatar(user.getUserAvatar());
-
         //过滤字符，防止XSS攻击
         comment.setCommentContent(HtmlUtil.escape(comment.getCommentContent()));
-
         comment.setCommentAuthorName(user.getUserNickname());
         comment.setCommentAuthorEmail(user.getUserEmail());
         comment.setCommentAuthorUrl(user.getUserUrl());

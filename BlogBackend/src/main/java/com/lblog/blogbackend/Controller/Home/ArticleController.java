@@ -35,12 +35,9 @@ public class ArticleController {
     @Autowired
     private CategoryService categoryService;
 
-    /**
-     * 文章详情页显示
-     *
-     * @param articleId 文章ID
-     * @return modelAndView
-     */
+
+    /*
+    // 文章详情页显示
     @RequestMapping(value = "/article/{articleId}")
     public String getArticleDetailPage(@PathVariable("articleId") Integer articleId, Model model) {
 
@@ -49,37 +46,21 @@ public class ArticleController {
         if (article == null) {
             return "Home/Error/404";
         }
-
-        //用户信息
+        model.addAttribute("article", article);
         UserEntity user = userService.getUserById(article.getArticleUserId());
         article.setUser(user);
-
-        //文章信息
-        model.addAttribute("article", article);
-
-        //评论列表
         List<CommentEntity> commentList = commentService.listCommentByArticleId(articleId);
         model.addAttribute("commentList", commentList);
-
-        //相关文章
         List<Integer> categoryIds = articleService.listCategoryIdByArticleId(articleId);
         List<ArticleEntity> similarArticleList = articleService.listArticleByCategoryIds(categoryIds, 5);
         model.addAttribute("similarArticleList", similarArticleList);
-
         //猜你喜欢
         List<ArticleEntity> mostViewArticleList = articleService.listArticleByViewCount(5);
         model.addAttribute("mostViewArticleList", mostViewArticleList);
-
-        //获取下一篇文章
         ArticleEntity afterArticle = articleService.getAfterArticle(articleId);
         model.addAttribute("afterArticle", afterArticle);
-
-        //获取上一篇文章
         ArticleEntity preArticle = articleService.getPreArticle(articleId);
         model.addAttribute("preArticle", preArticle);
-
-        //侧边栏
-        //标签列表显示
         List<TagEntity> allTagList = tagService.listTag();
         model.addAttribute("allTagList", allTagList);
         //获得随机文章
@@ -88,16 +69,11 @@ public class ArticleController {
         //获得热评文章
         List<ArticleEntity> mostCommentArticleList = articleService.listArticleByCommentCount(8);
         model.addAttribute("mostCommentArticleList", mostCommentArticleList);
-
         return "Home/Page/articleDetail";
     }
-
-    /**
-     * 点赞增加
-     *
-     * @param id 文章ID
-     * @return 点赞量数量
      */
+
+    // 点赞增加
     @RequestMapping(value = "/article/like/{id}", method = {RequestMethod.POST}, produces = {"text/plain;charset=UTF-8"})
     @ResponseBody
     public String increaseLikeCount(@PathVariable("id") Integer id) {
@@ -108,12 +84,7 @@ public class ArticleController {
         return JSON.toJSONString(articleCount);
     }
 
-    /**
-     * 文章访问量数增加
-     *
-     * @param id 文章ID
-     * @return 访问量数量
-     */
+    // 文章访问量数增加
     @RequestMapping(value = "/article/view/{id}", method = {RequestMethod.POST}, produces = {"text/plain;charset=UTF-8"})
     @ResponseBody
     public String increaseViewCount(@PathVariable("id") Integer id) {

@@ -1,5 +1,6 @@
 package com.lblog.blogbackend.Controller.Admin;
 
+import com.lblog.blogbackend.model.DTO.JsonReturnDTO;
 import com.lblog.blogbackend.model.entity.CategoryEntity;
 import com.lblog.blogbackend.service.ArticleService;
 import com.lblog.blogbackend.service.CategoryService;
@@ -21,11 +22,8 @@ public class CategoryBackendController {
     @Autowired
     private CategoryService categoryService;
 
-    /**
-     * 后台分类列表显示
-     *
-     * @return
-     */
+    /*
+    // 分类列表显示
     @RequestMapping(value = "")
     public ModelAndView categoryList() {
         ModelAndView modelandview = new ModelAndView();
@@ -33,66 +31,51 @@ public class CategoryBackendController {
         modelandview.addObject("categoryList",categoryList);
         modelandview.setViewName("Admin/Category/index");
         return modelandview;
-
     }
-
-    /**
-     * 后台添加分类提交
-     *
-     * @param category
-     * @return
      */
+
+    // 添加分类
     @RequestMapping(value = "/insertSubmit",method = RequestMethod.POST)
-    public String insertCategorySubmit(CategoryEntity category)  {
+    public JsonReturnDTO insertCategorySubmit(CategoryEntity category)  {
         categoryService.insertCategory(category);
-        return "redirect:/admin/category";
+        List<CategoryEntity> categoryList = categoryService.listCategoryWithCount();
+        String result = categoryList.toString();
+        System.out.println(result);
+        return new JsonReturnDTO().success();
+        // return "redirect:/admin/category";
     }
 
-    /**
-     * 删除分类
-     *
-     * @param id
-     * @return
-     */
+    // 删除分类
     @RequestMapping(value = "/delete/{id}")
-    public String deleteCategory(@PathVariable("id") Integer id)  {
+    public JsonReturnDTO deleteCategory(@PathVariable("id") Integer id) {
         //禁止删除有文章的分类
         int count = articleService.countArticleByCategoryId(id);
         if (count == 0) {
             categoryService.deleteCategory(id);
         }
-        return "redirect:/admin/category";
+        return new JsonReturnDTO().success();
+        // return "redirect:/admin/category";
     }
 
-    /**
-     * 编辑分类页面显示
-     *
-     * @param id
-     * @return
-     */
+    /*
+    // 编辑分类
     @RequestMapping(value = "/edit/{id}")
     public ModelAndView editCategoryView(@PathVariable("id") Integer id)  {
         ModelAndView modelAndView = new ModelAndView();
-
         CategoryEntity category =  categoryService.getCategoryById(id);
         modelAndView.addObject("category",category);
-
         List<CategoryEntity> categoryList = categoryService.listCategoryWithCount();
         modelAndView.addObject("categoryList",categoryList);
-
         modelAndView.setViewName("Admin/Category/edit");
         return modelAndView;
     }
+    */
 
-    /**
-     * 编辑分类提交
-     *
-     * @param category 分类
-     * @return 重定向
-     */
+    // 编辑分类提交
     @RequestMapping(value = "/editSubmit",method = RequestMethod.POST)
-    public String editCategorySubmit(CategoryEntity category)  {
+    public JsonReturnDTO editCategorySubmit(CategoryEntity category)  {
         categoryService.updateCategory(category);
-        return "redirect:/admin/category";
+        return new JsonReturnDTO().success();
+        // return "redirect:/admin/category";
     }
 }
