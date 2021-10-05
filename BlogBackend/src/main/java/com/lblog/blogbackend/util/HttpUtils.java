@@ -4,12 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class HttpUtils {
 
-    /**
-     * 获得IP地址
-     *
-     * @param request
-     * @return
-     */
+    // 获得IP地址
     public static String getIpAddr(HttpServletRequest request) {
         String ipAddress = request.getHeader("x-forwarded-for");
         if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {

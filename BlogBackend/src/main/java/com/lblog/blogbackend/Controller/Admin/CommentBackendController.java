@@ -4,6 +4,7 @@ import cn.hutool.http.HtmlUtil;
 import com.lblog.blogbackend.constant.enums.ArticleRoleEnums;
 import com.lblog.blogbackend.constant.enums.ArticleStatusEnums;
 import com.lblog.blogbackend.constant.enums.UserRoleEnums;
+import com.lblog.blogbackend.model.DTO.JsonReturnDTO;
 import com.lblog.blogbackend.model.entity.ArticleEntity;
 import com.lblog.blogbackend.model.entity.CommentEntity;
 import com.lblog.blogbackend.model.entity.UserEntity;
@@ -21,6 +22,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.jar.JarEntry;
 
 @Controller
 @RequestMapping("/admin/comment")
@@ -31,12 +33,8 @@ public class CommentBackendController {
     @Autowired
     private ArticleService articleService;
 
-    /**
-     * 评论页面
-     * 我发送的评论
-     *
-     * @return modelAndView
-     */
+    /*
+    // 发送的评论
     @RequestMapping(value = "")
     public String commentList(HttpSession session, Model model) {
         UserEntity user = (UserEntity) session.getAttribute("user");
@@ -48,26 +46,15 @@ public class CommentBackendController {
         return "Admin/Comment/index";
     }
 
-
-    /**
-     * 评论页面
-     * 我收到的评论
-     *
-     * @return modelAndView
-     */
+    //收到的评论
     @RequestMapping(value = "/receive")
     public String myReceiveComment(HttpSession session, Model model) {
         UserEntity user = (UserEntity) session.getAttribute("user");
         return "Admin/Comment/index";
     }
+    */
 
-
-    /**
-     * 添加评论
-     *
-     * @param request
-     * @param comment
-     */
+    // 添加评论
     @RequestMapping(value = "/insert", method = {RequestMethod.POST}, produces = {"text/plain;charset=UTF-8"})
     @ResponseBody
     public void insertComment(HttpServletRequest request, CommentEntity comment, HttpSession session) {
@@ -85,11 +72,7 @@ public class CommentBackendController {
         articleService.updateCommentCount(article.getArticleId());
     }
 
-    /**
-     * 删除评论
-     *
-     * @param id 批量ID
-     */
+    // 删除评论
     @RequestMapping(value = "/delete/{id}")
     public void deleteComment(@PathVariable("id") Integer id, HttpSession session) {
         CommentEntity comment = commentService.getCommentById(id);
@@ -110,69 +93,52 @@ public class CommentBackendController {
         articleService.updateCommentCount(article.getArticleId());
     }
 
-    /**
-     * 编辑评论页面显示
-     *
-     * @param id
-     * @return
-     */
+    /*
+    // 编辑评论页面
     @RequestMapping(value = "/edit/{id}")
     public String editCommentView(@PathVariable("id") Integer id, Model model, HttpSession session) {
-        // 没有权限操作,只有管理员可以操作
         UserEntity user = (UserEntity) session.getAttribute("user");
-        if (!Objects.equals(user.getUserRole(), UserRoleEnums.ADMIN.getValue())) {
+        if (!Objects.equals(user.getUserRole(), UserRoleEnums.ADMIN.getValue())) { // 没有权限操作,只有管理员可以操作
             return "redirect:/403";
         }
         CommentEntity comment = commentService.getCommentById(id);
         model.addAttribute("comment", comment);
         return "Admin/Comment/edit";
     }
-
-
-    /**
-     * 编辑评论提交
-     *
-     * @param comment
-     * @return
      */
+
+
+    // 编辑评论提交
     @RequestMapping(value = "/editSubmit", method = RequestMethod.POST)
-    public String editCommentSubmit(CommentEntity comment, HttpSession session) {
+    public JsonReturnDTO editCommentSubmit(CommentEntity comment, HttpSession session) {
         UserEntity user = (UserEntity) session.getAttribute("user");
-        // 没有权限操作,只有管理员可以操作
-        if (!Objects.equals(user.getUserRole(), UserRoleEnums.ADMIN.getValue())) {
-            return "redirect:/403";
+        if (!Objects.equals(user.getUserRole(), UserRoleEnums.ADMIN.getValue())) { // 没有权限操作,只有管理员可以操作
+            return new JsonReturnDTO().fail("403");
+            // return "redirect:/403";
         }
         commentService.updateComment(comment);
-        return "redirect:/admin/comment";
+        return new JsonReturnDTO().success();
+        // return "redirect:/admin/comment";
     }
 
-
-    /**
-     * 回复评论页面显示
-     *
-     * @param id
-     * @return
-     */
+    /*
+    // 回复评论页面
     @RequestMapping(value = "/reply/{id}")
     public String replyCommentView(@PathVariable("id") Integer id, Model model) {
         CommentEntity comment = commentService.getCommentById(id);
         model.addAttribute("comment", comment);
         return "Admin/Comment/reply";
     }
+    */
 
-    /**
-     * 回复评论提交
-     *
-     * @param request
-     * @param comment
-     * @return
-     */
+    // 回复评论提交
     @RequestMapping(value = "/replySubmit", method = RequestMethod.POST)
-    public String replyCommentSubmit(HttpServletRequest request, CommentEntity comment, HttpSession session) {
+    public JsonReturnDTO replyCommentSubmit(HttpServletRequest request, CommentEntity comment, HttpSession session) {
         //文章评论数+1
         ArticleEntity article = articleService.getArticleByStatusAndId(ArticleStatusEnums.PUBLISHED.getValue(), comment.getCommentArticleId());
         if (article == null) {
-            return "redirect:/404";
+            return new JsonReturnDTO().fail("404");
+            // return "redirect:/404";
         }
         UserEntity user = (UserEntity) session.getAttribute("user");
         comment.setCommentContent(HtmlUtil.escape(comment.getCommentContent()));
@@ -190,6 +156,8 @@ public class CommentBackendController {
             comment.setCommentRole(ArticleRoleEnums.VISITOR.getValue());
         }
         commentService.insertComment(comment);
-        return "redirect:/admin/comment";
+        return new JsonReturnDTO().success();
+        // return "redirect:/admin/comment";
     }
+
 }
