@@ -1,5 +1,6 @@
 package com.lblog.blogbackend.Controller.Admin;
 
+import com.lblog.blogbackend.mapper.UserMapper;
 import org.springframework.ui.Model;
 import cn.hutool.json.JSONObject;
 import com.lblog.blogbackend.constant.enums.UserRoleEnums;
@@ -10,10 +11,7 @@ import com.lblog.blogbackend.model.entity.UserEntity;
 import com.lblog.blogbackend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
@@ -27,7 +25,7 @@ import java.util.Map;
 
 import static com.lblog.blogbackend.util.HttpUtils.getIpAddr;
 
-@Controller
+@RestController
 public class AdminController {
 
     @Autowired
@@ -44,6 +42,9 @@ public class AdminController {
 
     @Autowired
     private TagService tagService;
+
+    @Autowired
+    private UserMapper userMapper;
 
     /*
 

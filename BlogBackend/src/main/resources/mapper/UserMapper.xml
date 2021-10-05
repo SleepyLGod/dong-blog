@@ -98,10 +98,9 @@
 
     <!--根据用户名查用户-->
     <select id="getUserByName" parameterType="String" resultType="com.lblog.blogbackend.model.entity.UserEntity">
-        SELECT
-        id, user_name, password, nickname, email, url, avatar,
-        ip, register_time, last_login_time, status, user_role, birth, age, tele
-        FROM
+        select
+        <include refid="Base_Column_List"/>
+        from
         <include refid="lhd"/>
         <where>
             user_name=#{userName,jdbcType=VARCHAR}

@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface ArticleCategoryAssMapper /*extends BaseMapper<ArticleCategoryAssEntity>*/ {
+public interface ArticleCategoryAssMapper extends BaseMapper<ArticleCategoryAssEntity> {
 
         /**
          * 添加文章和分类关联记录
