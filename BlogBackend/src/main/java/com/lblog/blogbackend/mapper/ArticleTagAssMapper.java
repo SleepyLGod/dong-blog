@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface ArticleTagAssMapper /*extends BaseMapper<ArticleTagAssEntity>*/ {
+public interface ArticleTagAssMapper extends BaseMapper<ArticleTagAssEntity> {
 
     /**
      * 添加文章和标签关联记录

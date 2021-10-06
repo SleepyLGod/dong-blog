@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -32,8 +34,14 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private CommentMapper commentMapper;
 
+    @Autowired
+    private CategoryMapper categoryMapper;
+
+    @Autowired
+    private TagMapper tagMapper;
+
     @Override
-    public Integer countArticle(Integer status) {
+    public Integer countArticle(Integer status) { // 草稿 or 正式文章
         Integer cnt = 0;
         try {
             cnt = articleMapper.countArticle(status);
@@ -71,11 +79,18 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Integer countArticleByCategoryId(Integer categoryId) {
         Integer cnt = 0;
+        CategoryEntity category = categoryMapper.getCategoryById(categoryId);
+        // 原始时间 2021-10-01 00:00:00
+        SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
+        ParsePosition pos = new ParsePosition(0);
+        Date date = sdf.parse( " 2021-10-01 00:00:00 " ,pos);
+        if(category.getCategoryDeletedTime().equals(date)) { // 没有被删
         try {
             cnt = articleCategoryAssMapper.countArticleByCategoryId(categoryId);
         }catch (Exception e) {
             e.printStackTrace();
             System.out.println("根据分类统计文章数量失败!");
+        }
         }
         return cnt;
     }
@@ -83,23 +98,54 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Integer countArticleByTagId(Integer tagId) {
         Integer cnt = 0;
-        try {
-            cnt = articleTagAssMapper.countArticleByTagId(tagId);
-        }catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("根据标签统计文章数量失败！");
+        TagEntity tag = tagMapper.getTagById(tagId);
+        // 原始时间 2021-10-01 00:00:00
+        SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
+        ParsePosition pos = new ParsePosition(0);
+        Date date = sdf.parse( " 2021-10-01 00:00:00 " ,pos);
+        if(tag.getTagDeletedTime().equals(date)){
+            try {
+                cnt = articleTagAssMapper.countArticleByTagId(tagId);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("根据标签统计文章数量失败！");
+            }
         }
         return cnt;
     }
 
     @Override
     public List<ArticleEntity> listArticle(HashMap<String, Object> criteria) {
-        return articleMapper.findAll(criteria);
+        List<ArticleEntity> articleEntityList = articleMapper.findAll(criteria);
+        List<ArticleEntity> articleEntityList1 = null;
+        for (int i = 0;i < articleEntityList.size();++i) {
+            ArticleEntity article = articleEntityList.get(i);
+            // 原始时间 2021-10-01 00:00:00
+            SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
+            ParsePosition pos = new ParsePosition(0);
+            Date date = sdf.parse( " 2021-10-01 00:00:00 " ,pos);
+            if(article.getArticleDeletedTime().equals(date)) {
+                articleEntityList1.add(article);
+            }
+        }
+        return articleEntityList1;
     }
 
     @Override
     public List<ArticleEntity> listRecentArticle(Integer userId, Integer limit) {
-        return articleMapper.listArticleByLimit(userId, limit);
+        List<ArticleEntity> articleEntityList = articleMapper.listArticleByLimit(userId, limit);
+        List<ArticleEntity> articleEntityList1 = null;
+        for (int i = 0;i < articleEntityList.size();++i) {
+            ArticleEntity article = articleEntityList.get(i);
+            // 原始时间 2021-10-01 00:00:00
+            SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
+            ParsePosition pos = new ParsePosition(0);
+            Date date = sdf.parse( " 2021-10-01 00:00:00 " ,pos);
+            if(article.getArticleDeletedTime().equals(date)) {
+                articleEntityList1.add(article);
+            }
+        }
+        return articleEntityList1;
     }
 
     @Override
@@ -137,30 +183,41 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public void deleteArticleBatch(List<Integer> ids) {
-        articleMapper.deleteBatch(ids);
+    public void deleteArticleBatch(List<Integer> ids) { // 批量删除文章
+        Date deleteDate = new Date();
+        for(int i = 0; i < ids.size(); ++i) {
+            Integer id = ids.get(i);
+            deleteArticle(id);
+        }
     }
 
     @Override
     public void deleteArticle(Integer id) {
         // 删除文章id
-        articleMapper.deleteById(id);
+        ArticleEntity article = articleMapper.getArticleByStatusAndId(1,id);
+        article.setArticleDeletedTime(new Date());
         // 删除评论
         commentMapper.deleteByArticleId(id);
-        // 删除分类关联
+        // 删除分类关联  关联不需要逻辑删除
         articleCategoryAssMapper.deleteByArticleId(id);
-        // 删除标签关联
+        // 删除标签关联  关联不需要逻辑删除
         articleTagAssMapper.deleteByArticleId(id);
     }
 
     @Override
     public ArticleEntity getArticleByStatusAndId(Integer status, Integer id) {
         ArticleEntity article = articleMapper.getArticleByStatusAndId(status,id);
-        if(article != null) {
+        // 原始时间 2021-10-01 00:00:00
+        SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
+        ParsePosition pos = new ParsePosition(0);
+        Date date = sdf.parse( " 2021-10-01 00:00:00 " ,pos);
+        if((article != null) && (article.getArticleDeletedTime().equals(date))) {
             List<CategoryEntity> categoryEntityList = articleCategoryAssMapper.listCategoryByArticleId(article.getArticleId());
             List<TagEntity> tagEntityList = articleTagAssMapper.listTagByArticleId(article.getArticleId());
             article.setCategoryList(categoryEntityList);
             article.setTagList(tagEntityList);
+        }else{
+            article = null;
         }
         return article;
     }
@@ -170,14 +227,38 @@ public class ArticleServiceImpl implements ArticleService {
         return articleMapper.listArticleByViewCount(limit);
     }
 
+    // 递归函数
     @Override
     public ArticleEntity getAfterArticle(Integer id) {
-        return articleMapper.getAfterArticle(id);
+        if(articleMapper.getArticleByStatusAndId(1,id) != null) {
+            return null;
+        }
+        // 原始时间 2021-10-01 00:00:00
+        SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
+        ParsePosition pos = new ParsePosition(0);
+        Date date = sdf.parse( " 2021-10-01 00:00:00 " ,pos);
+        if (articleMapper.getAfterArticle(id).getArticleDeletedTime().equals(date)) {
+            return articleMapper.getAfterArticle(id);
+        } else {
+                return getAfterArticle(id + 1);
+        }
     }
 
+    // 递归函数
     @Override
     public ArticleEntity getPreArticle(Integer id) {
-        return articleMapper.getPreArticle(id);
+        if(articleMapper.getArticleByStatusAndId(1,id) != null) {
+            return null;
+        }
+        // 原始时间 2021-10-01 00:00:00
+        SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
+        ParsePosition pos = new ParsePosition(0);
+        Date date = sdf.parse( " 2021-10-01 00:00:00 " ,pos);
+        if(articleMapper.getPreArticle(id).getArticleDeletedTime().equals(date)) {
+            return articleMapper.getPreArticle(id);
+        } else {
+            return articleMapper.getPreArticle(id - 1);
+        }
     }
 
     @Override
@@ -196,7 +277,7 @@ public class ArticleServiceImpl implements ArticleService {
         article.setArticleIsComment(CommentStatusEnums.ALLOW.getValue());
         article.setArticleCommentCount(0);
         article.setArticleViews(0);
-        article.setArticleLikeCount(0);;
+        article.setArticleLikeCount(0);
         article.setArticleOrder(1);
         article.setArticleCreateTime(new Date());
         article.setArticleUpdateTime(new Date());
@@ -223,7 +304,19 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleEntity> listArticleByCategoryId(Integer cateId, Integer limit) {
-        return articleMapper.findArticleByCategoryId(cateId,limit);
+        List<ArticleEntity> articleEntityList = articleMapper.findArticleByCategoryId(cateId,limit);
+        List<ArticleEntity> articleEntityList1 =null;
+        for(int i = 0; i < articleEntityList.size(); ++i) {
+            ArticleEntity article = articleEntityList.get(i);
+            // 原始时间 2021-10-01 00:00:00
+            SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
+            ParsePosition pos = new ParsePosition(0);
+            Date date = sdf.parse( " 2021-10-01 00:00:00 " ,pos);
+            if(article.getArticleDeletedTime().equals(date)) {
+                articleEntityList1.add(article);
+            }
+        }
+        return articleEntityList1;
     }
 
     @Override
@@ -232,13 +325,37 @@ public class ArticleServiceImpl implements ArticleService {
             return null;
         }
         else {
-            return articleMapper.findArticleByCategoryIds(cateIds, limit);
+            List<ArticleEntity> articleEntityList = articleMapper.findArticleByCategoryIds(cateIds, limit);
+            List<ArticleEntity> articleEntityList1 =null;
+            for(int i = 0; i < articleEntityList.size(); ++i) {
+                ArticleEntity article = articleEntityList.get(i);
+                // 原始时间 2021-10-01 00:00:00
+                SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
+                ParsePosition pos = new ParsePosition(0);
+                Date date = sdf.parse( " 2021-10-01 00:00:00 " ,pos);
+                if(article.getArticleDeletedTime().equals(date)) {
+                    articleEntityList1.add(article);
+                }
+            }
+            return articleEntityList1;
         }
     }
 
     @Override
     public List<Integer> listCategoryIdByArticleId(Integer articleId) {
-        return articleCategoryAssMapper.selectCategoryIdByArticleId(articleId);
+        List<Integer> categoryIdList = articleCategoryAssMapper.selectCategoryIdByArticleId(articleId);
+        List<Integer> categoryIdList1= null;
+        for( int i = 0; i < categoryIdList.size();++i) {
+            CategoryEntity category = categoryMapper.getCategoryById(categoryIdList.get(i));
+            // 原始时间 2021-10-01 00:00:00
+            SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
+            ParsePosition pos = new ParsePosition(0);
+            Date date = sdf.parse( " 2021-10-01 00:00:00 " ,pos);
+            if(category.getCategoryDeletedTime().equals(date)) {
+                categoryIdList1.add(category.getCategoryId());
+            }
+        }
+        return categoryIdList1;
     }
 
     @Override

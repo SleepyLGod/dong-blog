@@ -15,19 +15,20 @@
         <result column="article_update_time" property="articleUpdateTime" jdbcType="TIMESTAMP"/>
         <result column="article_status" property="articleStatus" jdbcType="INTEGER"/>
         <result column="article_thumbnail" property="articleThumbnail" jdbcType="VARCHAR"/>
+        <result column="article_deleted_time" property="articleDeletedTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="lhd">article</sql>
 
     <sql id="Table">
         article_id, article_user_id, article_title, article_content, article_views, article_comment_count, article_like_count, article_create_time,
-        article_update_time, article_is_comment, article_status, article_order, article_thumbnail
+        article_update_time, article_is_comment, article_status, article_order, article_thumbnail,article_deleted_time
     </sql>
 
 
     <select id="listAllNotWithContent" resultType="com.lblog.blogbackend.model.entity.ArticleEntity">
         SELECT
-        article_id, article_user_id, article_title, article_create_time, article_thumbnail
+        article_id, article_user_id, article_title, article_create_time, article_thumbnail,article_deleted_time
         FROM
         <include refid="lhd"/>
         WHERE article_status = 1
@@ -43,9 +44,9 @@
             <if test="status != null">
                 article.article_status = #{status} AND
             </if>
-            <if test="keywords != null">
-                article.article_title LIKE concat(concat('%',#{keywords}),'%') AND
-            </if>
+<!--            <if test="keywords != null">-->
+<!--                article.article_title LIKE concat(concat('%',#{keywords}),'%') AND-->
+<!--            </if>-->
             <if test="userId != null">
                 article.article_user_id = #{userId} AND
             </if>
@@ -96,14 +97,14 @@
             article_views, article_comment_count,
             article_like_count, article_create_time, article_update_time,
             article_is_comment, article_status, article_order,
-            article_content,article_thumbnail)
+            article_content,article_thumbnail,article_deleted_time)
             values (#{articleUserId,jdbcType=INTEGER}, #{articleTitle,jdbcType=VARCHAR},
             #{articleViews,jdbcType=INTEGER},
             #{articleCommentCount,jdbcType=INTEGER},
             #{articleLikeCount,jdbcType=INTEGER}, #{articleCreateTime,jdbcType=TIMESTAMP},
             #{articleUpdateTime,jdbcType=TIMESTAMP},
             #{articleIsComment,jdbcType=INTEGER}, #{articleStatus,jdbcType=INTEGER}, #{articleOrder,jdbcType=INTEGER},
-            #{articleContent,jdbcType=LONGVARCHAR}, #{articleThumbnail})
+            #{articleContent,jdbcType=LONGVARCHAR}, #{articleThumbnail},#{articleDeletedTime,jdbcType=TIMESTAMP})
     </insert>
 
 
@@ -123,6 +124,7 @@
             <if test="articleOrder != null">article_order = #{articleOrder,jdbcType=INTEGER},</if>
             <if test="articleContent != null">article_content = #{articleContent,jdbcType=LONGVARCHAR},</if>
             <if test="articleThumbnail != null">article_thumbnail = #{articleThumbnail,jdbcType=VARCHAR},</if>
+            <if test="articleDeletedTime != null">articleDeletedTime = #{articleDeletedTime,jdbcType=TIMESTAMP}</if>
         </set>
         where article_id = #{articleId,jdbcType=INTEGER}
     </update>
@@ -287,7 +289,7 @@
         article.article_views, article.article_comment_count,
         article.article_like_count, article.article_create_time, article.article_update_time,
         article.article_is_comment, article.article_status, article.article_order,
-        article.article_thumbnail
+        article.article_thumbnail,article.article_deleted_time
         FROM article, article_category_ass
         <where>
             article.article_status = 1 AND
@@ -307,7 +309,7 @@
         SELECT
         article_id, article_user_id, article_title, article_views, article_comment_count, article_like_count,
         article_create_time,
-        article_update_time, article_is_comment, article_status, article_order, article_thumbnail
+        article_update_time, article_is_comment, article_status, article_order, article_thumbnail,article_deleted_time
         FROM
         <include refid="lhd"/>
         <where>

@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-@Builder
+//@Builder
 @TableName("comment")
 public class CommentEntity implements Serializable {
 
@@ -56,11 +56,11 @@ public class CommentEntity implements Serializable {
     @TableLogic
     private String commentAgent;
 
-    @TableField(value = "")
+    @TableField(value = "comment_IP")
     @TableLogic
     private String commentIp;
 
-    @TableField(value = "comment_IP")
+    @TableField(value = "comment_create_time")
     @TableLogic
     private Date commentCreateTime;
 
@@ -83,4 +83,8 @@ public class CommentEntity implements Serializable {
      */
     @TableLogic
     private ArticleEntity article;
+
+    @TableField(value = "comment_deleted_time")
+    @TableLogic
+    private Date commentDeletedTime;
 }

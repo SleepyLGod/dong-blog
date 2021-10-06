@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface PersonalInfoMapper/* extends BaseMapper<PersonalInfoEntity> */{
+public interface PersonalInfoMapper extends BaseMapper<PersonalInfoEntity> {
 
     /**
      * 删除

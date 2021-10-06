@@ -17,20 +17,23 @@
         <result column="birth" property="userBirth" jdbcType="DATE"/>
         <result column="age" property="userAge" jdbcType="INTEGER"/>
         <result column="tele" property="userTele" jdbcType="VARCHAR"/>
+        <result column="user_deleted_time" property="userDeletedTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="lhd">user</sql>
 
     <sql id="Base_Column_List">
         id, user_name, password, nickname, email, url, avatar,
-        ip, register_time, last_login_time, status, user_role, birth, age, tele
+        ip, register_time, last_login_time, status, user_role, birth, age, tele,user_deleted_time
     </sql>
 
     <select id="getUserById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
         from <include refid="lhd"/>
-        where id = #{userId,jdbcType=INTEGER}
+        <where>
+            id = #{userId,jdbcType=INTEGER}
+        </where>
     </select>
 
     <delete id="deleteById" parameterType="java.lang.Integer">
@@ -43,12 +46,12 @@
         insert into
         <include refid="lhd"/>
         (id, user_name, password, nickname, email, url, avatar, ip,
-        register_time, last_login_time, status, user_role, birth, age, tele)
+        register_time, last_login_time, status, user_role, birth, age, tele,user_deleted_time)
         values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userPass,jdbcType=VARCHAR},
         #{userNickname,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR}, #{userUrl,jdbcType=VARCHAR},
         #{userAvatar,jdbcType=VARCHAR}, #{userIp,jdbcType=VARCHAR}, #{userRegisterTime,jdbcType=TIMESTAMP},
         #{userLastLoginTime,jdbcType=TIMESTAMP}, #{userStatus,jdbcType=INTEGER}, #{userRole,jdbcType=VARCHAR},
-        #{userBirth,jdbcType=DATE}, #{userAge,jdbcType=INTEGER}, #{userTele,jdbcType=VARCHAR})
+        #{userBirth,jdbcType=DATE}, #{userAge,jdbcType=INTEGER}, #{userTele,jdbcType=VARCHAR},#{userDeletedTime,jdbcType=TIMESTAMP})
     </insert>
 
     <update id="update" parameterType="com.lblog.blogbackend.model.entity.UserEntity">
@@ -69,6 +72,7 @@
             <if test="userBirth != null">birth = #{userBirth,jdbcType=DATE},</if>
             <if test="userAge != null">age = #{userAge,jdbcType=INTEGER},</if>
             <if test="userTele != null">tele = #{userTele,jdbcType=VARCHAR}</if>
+            <if test="userDeletedTime != null">userDeletedTime = #{userDeletedTime,jdbcType=TIMESTAMP}</if>
         </set>
         where id = #{userId,jdbcType=INTEGER}
     </update>

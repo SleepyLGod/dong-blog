@@ -64,7 +64,7 @@ public class ArticleBackendController {
     @RequestMapping(value = "/insertSubmit", method = RequestMethod.POST)
     public JsonReturnDTO insertArticleSubmit(HttpSession session, ArticleValueDTO articleParam) {
         ArticleEntity article = new ArticleEntity();
-        //用户ID
+        // 用户ID
         UserEntity user = (UserEntity) session.getAttribute("user");
         if (user != null) {
             article.setArticleUserId(user.getUserId());
@@ -73,7 +73,7 @@ public class ArticleBackendController {
         article.setArticleThumbnail(articleParam.getArticleThumbnail());
         article.setArticleContent(articleParam.getArticleContent());
         article.setArticleStatus(articleParam.getArticleStatus());
-        //填充分类
+        // 填充分类
         List<CategoryEntity> categoryList = new ArrayList<>();
         if (articleParam.getArticleChildCategoryId() != null) {
             categoryList.add(new CategoryEntity(articleParam.getArticleParentCategoryId()));
@@ -82,7 +82,7 @@ public class ArticleBackendController {
             categoryList.add(new CategoryEntity(articleParam.getArticleChildCategoryId()));
         }
         article.setCategoryList(categoryList);
-        //填充标签
+        // 填充标签
         List<TagEntity> tagList = new ArrayList<>();
         if (articleParam.getArticleTagIds() != null) { // 用户查询自己的文章, 管理员查询所有的
             for (int i = 0; i < articleParam.getArticleTagIds().size(); i++) {
@@ -196,7 +196,7 @@ public class ArticleBackendController {
             categoryList.add(new CategoryEntity(articleParam.getArticleChildCategoryId()));
         }
         article.setCategoryList(categoryList);
-        //填充标签——方法：便历标签表
+        // 填充标签——方法：便历标签表
         List<TagEntity> tagList = new ArrayList<>();
         if (articleParam.getArticleTagIds() != null) {
             for (int i = 0; i < articleParam.getArticleTagIds().size(); i++) {

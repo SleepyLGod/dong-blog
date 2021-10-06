@@ -6,9 +6,9 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
-@Builder
 @TableName("tag")
 public class TagEntity implements Serializable{
     @Serial
@@ -31,6 +31,10 @@ public class TagEntity implements Serializable{
      */
     @TableLogic
     private Integer articleCount;
+
+    @TableField(value = "tag_deleted_time")
+    @TableLogic
+    private Date tagDeletedTime;
 
     public TagEntity() {
     }

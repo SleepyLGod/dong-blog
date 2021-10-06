@@ -1,5 +1,7 @@
 package com.lblog.blogbackend.service.impl;
 
+import com.lblog.blogbackend.model.entity.ArticleEntity;
+import com.lblog.blogbackend.model.entity.CommentEntity;
 import com.lblog.blogbackend.model.entity.UserEntity;
 import com.lblog.blogbackend.mapper.ArticleMapper;
 import com.lblog.blogbackend.mapper.CommentMapper;
@@ -12,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -36,17 +40,34 @@ public class UserServiceImpl  implements UserService {
     @Override
     public List<UserEntity> ListUser() {
         List<UserEntity> userEntities = userMapper.listUser();
+        List<UserEntity> returnUserEntities = null;
         for(int i = 0; i < userEntities.size(); ++i) {
-            // 个人博文数目
-            Integer articleCount = articleMapper.countArticleByUser(userEntities.get(i).getUserId());
-            userEntities.get(i).setArticleCount(articleCount);
+            UserEntity user = userEntities.get(i);
+            // 原始时间 2021-10-01 00:00:00
+            SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
+            ParsePosition pos = new ParsePosition(0);
+            Date date = sdf.parse( " 2021-10-01 00:00:00 " ,pos);
+            if(user.getUserDeletedTime().equals(date)) {
+                // 个人博文数目
+                Integer articleCount = articleMapper.countArticleByUser(user.getUserId());
+                user.setArticleCount(articleCount);
+                returnUserEntities.add(user);
+            }
         }
-        return userEntities;
+        return returnUserEntities;
     }
 
     @Override
     public UserEntity getUserById(Integer id) {
-        return userMapper.getUserById(id);
+        UserEntity user = userMapper.getUserById(id);
+        // 原始时间 2021-10-01 00:00:00
+        SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
+        ParsePosition pos = new ParsePosition(0);
+        Date date = sdf.parse( " 2021-10-01 00:00:00 " ,pos);
+        if(!user.getUserDeletedTime().equals(date)) {
+            user = null;
+        }
+        return user;
     }
 
     @Override
@@ -56,12 +77,17 @@ public class UserServiceImpl  implements UserService {
 
     @Override
     public void deleteUser(Integer id) { // 分别删除用户信息，用户评论、用户博文
-        userMapper.deleteById(id);
-        commentMapper.deleteByUserId(id);
+        Date userDeletedTimeNow = new Date();
+        UserEntity user = userMapper.getUserById(id);
+        user.setUserDeletedTime(userDeletedTimeNow);
+        commentMapper.deleteByUserId(id); // 评论无需保存，物理删除
         if(articleMapper.listArticleIdsByUserId(id) != null &&
             articleMapper.listArticleIdsByUserId(id).size() >0) {
-            for(Integer articleId : articleMapper.listArticleIdsByUserId(id)) {
-                articleService.deleteArticle(articleId);
+            for(Integer articleId : articleMapper.listArticleIdsByUserId(id)) { // 删掉草稿和正式文章
+                ArticleEntity article = articleMapper.getArticleByStatusAndId(0,articleId);
+                ArticleEntity article1= articleMapper.getArticleByStatusAndId(1,articleId);
+                article.setArticleDeletedTime(userDeletedTimeNow);
+                article1.setArticleDeletedTime(userDeletedTimeNow);
             }
         }
     }
@@ -77,27 +103,67 @@ public class UserServiceImpl  implements UserService {
 
     @Override
     public UserEntity getUserByNameOrEmail(String str) {
-        return userMapper.getUserByNameOrEmail(str);
+        UserEntity  user = userMapper.getUserByNameOrEmail(str);
+        // 原始时间 2021-10-01 00:00:00
+        SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
+        ParsePosition pos = new ParsePosition(0);
+        Date date = sdf.parse( " 2021-10-01 00:00:00 " ,pos);
+        if(!user.getUserDeletedTime().equals(date)) {
+            user = null;
+        }
+        return user;
     }
 
     @Override
     public UserEntity getUserByNameOrTele(String str) {
-        return userMapper.getUserByNameOrTele(str);
+        UserEntity user = userMapper.getUserByNameOrTele(str);
+        // 原始时间 2021-10-01 00:00:00
+        SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
+        ParsePosition pos = new ParsePosition(0);
+        Date date = sdf.parse( " 2021-10-01 00:00:00 " ,pos);
+        if(!user.getUserDeletedTime().equals(date)) {
+            user = null;
+        }
+        return user;
     }
 
     @Override
     public UserEntity getUserByName(String name) {
-        return userMapper.getUserByName(name);
+        UserEntity user = userMapper.getUserByName(name);
+        // 原始时间 2021-10-01 00:00:00
+        SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
+        ParsePosition pos = new ParsePosition(0);
+        Date date = sdf.parse( " 2021-10-01 00:00:00 " ,pos);
+        if(!user.getUserDeletedTime().equals(date)) {
+            user = null;
+        }
+        return user;
     }
 
     @Override
     public UserEntity getUserByEmail(String email) {
-        return userMapper.getUserByEmail(email);
+        UserEntity user = userMapper.getUserByEmail(email);
+        // 原始时间 2021-10-01 00:00:00
+        SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
+        ParsePosition pos = new ParsePosition(0);
+        Date date = sdf.parse( " 2021-10-01 00:00:00 " ,pos);
+        if(!user.getUserDeletedTime().equals(date)) {
+            user = null;
+        }
+        return user;
     }
 
     @Override
     public UserEntity getUserByTele(String tele) {
-        return userMapper.getUserByTele(tele);
+        UserEntity user = userMapper.getUserByTele(tele);
+        // 原始时间 2021-10-01 00:00:00
+        SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
+        ParsePosition pos = new ParsePosition(0);
+        Date date = sdf.parse( " 2021-10-01 00:00:00 " ,pos);
+        if(!user.getUserDeletedTime().equals(date)) {
+            user = null;
+        }
+        return user;
     }
 
 }
