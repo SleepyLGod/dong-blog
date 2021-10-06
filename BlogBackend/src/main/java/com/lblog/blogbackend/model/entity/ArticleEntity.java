@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-@Builder
+//@Builder
 @TableName("article")
 public class ArticleEntity implements Serializable{
 

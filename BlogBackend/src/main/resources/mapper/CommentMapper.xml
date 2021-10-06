@@ -16,7 +16,7 @@
         <result column="comment_create_time" property="commentCreateTime" jdbcType="TIMESTAMP"/>
         <result column="comment_role" property="commentRole" jdbcType="INTEGER"/>
         <result column="comment_user_id" property="commentUserId" jdbcType="INTEGER"/>
-        <result column="comment_deleted_time" property="commentDeletedTime" jdbcType="TIMESTAMP"/>
+<!--        <result column="comment_deleted_time" property="commentDeletedTime" jdbcType="TIMESTAMP"/>-->
     </resultMap>
 
     <sql id="lhd">comment</sql>
@@ -24,7 +24,7 @@
     <sql id="Base_Column_List">
         comment_id, comment_pid, comment_pname, comment_article_id, comment_author_name,
         comment_author_email, comment_author_url, comment_author_avatar, comment_content, comment_agent,
-        comment_IP,comment_create_time, comment_role,comment_user_id,comment_deleted_time
+        comment_IP,comment_create_time, comment_role,comment_user_id
     </sql>
 
     <select id="getCommentById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -60,13 +60,13 @@
         (comment_pid, comment_pname, comment_article_id,
         comment_author_name, comment_author_email,
         comment_author_url, comment_author_avatar, comment_content, comment_agent,
-        comment_IP, comment_create_time, comment_role, comment_user_id,comment_deleted_time)
+        comment_IP, comment_create_time, comment_role, comment_user_id)
         values (#{commentPid,jdbcType=INTEGER}, #{commentPname,jdbcType=VARCHAR}, #{commentArticleId,jdbcType=INTEGER},
         #{commentAuthorName,jdbcType=VARCHAR}, #{commentAuthorEmail,jdbcType=VARCHAR},
         #{commentAuthorUrl,jdbcType=VARCHAR},#{commentAuthorAvatar}, #{commentContent,jdbcType=VARCHAR},
         #{commentAgent,jdbcType=VARCHAR},
         #{commentIp,jdbcType=VARCHAR}, #{commentCreateTime,jdbcType=TIMESTAMP}, #{commentRole,jdbcType=INTEGER},
-        #{commentUserId,jdbcType=INTEGER},#{commentDeletedTime,jdbcType=TIMESTAMP})
+        #{commentUserId,jdbcType=INTEGER})
     </insert>
 
     <update id="update" parameterType="com.lblog.blogbackend.model.entity.CommentEntity">
@@ -86,7 +86,7 @@
             <if test="commentAuthorAvatar != null">comment_author_avatar = #{commentAuthorAvatar},</if>
             <if test="commentRole != null">comment_role = #{commentRole,jdbcType=INTEGER},</if>
             <if test="commentUserId != null">comment_user_id = #{commentUserId,jdbcType=INTEGER},</if>
-            <if test="commentDeletedTime != null">commentDeletedTime = #{commentDeletedTime,jdbcType=TIMESTAMP}</if>
+<!--            <if test="commentDeletedTime != null">commentDeletedTime = #{commentDeletedTime,jdbcType=TIMESTAMP}</if>-->
         </set>
         where comment_id = #{commentId,jdbcType=INTEGER}
     </update>

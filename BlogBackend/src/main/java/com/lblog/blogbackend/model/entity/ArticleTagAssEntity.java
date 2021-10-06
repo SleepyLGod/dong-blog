@@ -10,7 +10,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 @Data
-@Builder
+//@Builder
 @TableName("article_tag_ass")
 public class ArticleTagAssEntity implements Serializable{
     @Serial

@@ -11,7 +11,7 @@
  Target Server Version : 80026
  File Encoding         : 65001
 
- Date: 06/10/2021 17:30:12
+ Date: 06/10/2021 22:03:51
 */
 
 SET NAMES utf8mb4;
@@ -37,7 +37,7 @@ CREATE TABLE `article` (
   `article_order` int unsigned DEFAULT NULL COMMENT '排序值',
   `article_deleted_time` datetime NOT NULL DEFAULT '2021-10-01 00:00:00' COMMENT '博文删除时间',
   PRIMARY KEY (`article_id`),
-  KEY `article_user_id` (`article_user_id`) USING BTREE
+  KEY `article_user_id` (`article_user_id`,`article_deleted_time`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
@@ -97,7 +97,7 @@ CREATE TABLE `category` (
   `category_order` int unsigned DEFAULT '1' COMMENT '排序值',
   `category_deleted_time` datetime NOT NULL DEFAULT '2021-10-01 00:00:00' COMMENT '分类删除时间',
   PRIMARY KEY (`category_id`),
-  UNIQUE KEY `category_name` (`category_name`)
+  UNIQUE KEY `category_name` (`category_name`,`category_deleted_time`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
@@ -125,7 +125,6 @@ CREATE TABLE `comment` (
   `comment_create_time` datetime DEFAULT NULL COMMENT '评论时间',
   `comment_role` int DEFAULT NULL COMMENT '角色，是否管理员',
   `comment_user_id` bigint DEFAULT NULL COMMENT '评论ID,可能为空',
-  `comment_deleted_time` datetime NOT NULL DEFAULT '2021-10-01 00:00:00' COMMENT '评论删除时间',
   PRIMARY KEY (`comment_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb3;
 
@@ -166,7 +165,7 @@ CREATE TABLE `tag` (
   `tag_description` varchar(100) DEFAULT NULL COMMENT '标签描述',
   `tag_deleted_time` datetime NOT NULL DEFAULT '2021-10-01 00:00:00' COMMENT '标签删除时间',
   PRIMARY KEY (`tag_id`),
-  UNIQUE KEY `tag_name` (`tag_name`)
+  UNIQUE KEY `tag_name` (`tag_name`,`tag_deleted_time`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
@@ -197,8 +196,7 @@ CREATE TABLE `user` (
   `tele` varchar(12) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户手机号',
   `user_deleted_time` datetime NOT NULL DEFAULT '2021-10-01 00:00:00' COMMENT '注销时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`user_name`),
-  UNIQUE KEY `email` (`email`)
+  UNIQUE KEY `name` (`user_name`,`user_deleted_time`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------

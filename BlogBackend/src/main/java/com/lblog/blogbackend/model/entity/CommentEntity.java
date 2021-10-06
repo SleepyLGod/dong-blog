@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-@Builder
+//@Builder
 @TableName("comment")
 public class CommentEntity implements Serializable {
 

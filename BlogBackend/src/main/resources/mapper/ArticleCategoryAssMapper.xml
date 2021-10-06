@@ -27,6 +27,18 @@
         where article_id = #{value}
     </delete>
 
+<!--    <update id="deleteByArticleId" parameterType="java.lang.Integer">-->
+<!--       update-->
+<!--        <include refid="lhd"/>-->
+<!--        <set>-->
+<!--            <if test="categoryDeletedTime != null">-->
+<!--                category_deleted_time = '2021-10-01 00:01:11'-->
+<!--       -->
+<!--            </if>-->
+<!--        </set>-->
+<!--        where article_id =-->
+<!--    </update>-->
+
     <select id="countArticleByCategoryId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
         select count(*) from
         <include refid="lhd"/>

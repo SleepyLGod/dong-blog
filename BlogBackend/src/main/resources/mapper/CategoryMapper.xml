@@ -14,17 +14,17 @@
     <sql id="lhd">category</sql>
 
     <sql id="Base_Column_List">
-        category_id, category_pid, category_name, category_description, category_order, category_icon,category_deleted_time
+        category_id, category_pid, category_name, category_description, category_order, category_icon, category_deleted_time
     </sql>
 
 
     <insert id="insert" parameterType="com.lblog.blogbackend.model.entity.CategoryEntity" useGeneratedKeys="true" keyProperty="categoryId">
         insert into
         <include refid="lhd"/>
-        (category_pid, category_name,category_description, category_order, category_icon,category_deleted_time)
+        (category_pid, category_name,category_description, category_order, category_icon, category_deleted_time)
         values (#{categoryPid,jdbcType=INTEGER}, #{categoryName,jdbcType=VARCHAR},
         #{categoryDescription,jdbcType=VARCHAR}, #{categoryOrder,jdbcType=INTEGER},
-        #{categoryIcon,jdbcType=VARCHAR},#{categoryDeletedTime,jdbcType=TIMESTAMP})
+        #{categoryIcon,jdbcType=VARCHAR}, #{categoryDeletedTime,jdbcType=TIMESTAMP})
     </insert>
 
 

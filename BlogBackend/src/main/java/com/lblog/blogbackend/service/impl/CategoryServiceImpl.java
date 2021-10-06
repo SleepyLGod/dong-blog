@@ -10,6 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import javax.swing.*;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -41,35 +45,55 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryEntity> listCategory() {
         List<CategoryEntity> categoryEntityList = null;
+        List<CategoryEntity> categoryEntityList1= null;
+        // 原始时间 2021-10-01 00:00:00
+        SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
+        ParsePosition pos = new ParsePosition(0);
+        Date date = sdf.parse( " 2021-10-01 00:00:00 " ,pos);
         try {
             categoryEntityList = categoryMapper.listCategory();
+            for(int i = 0; i < categoryEntityList.size(); ++i) {
+                if(categoryEntityList.get(i).getCategoryDeletedTime().equals(date)) {
+                    categoryEntityList1.add(categoryEntityList.get(i));
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            log.error("根据文章获得分类列表失败, cause:{}", e);
+            log.error("获得分类列表失败, cause:{}", e);
         }
-        return categoryEntityList;
+        return categoryEntityList1;
     }
 
     @Override
     public List<CategoryEntity> listCategoryWithCount() {
         List<CategoryEntity> categoryEntityList = null;
+        List<CategoryEntity> categoryEntityList1= null;
+        // 原始时间 2021-10-01 00:00:00
+        SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
+        ParsePosition pos = new ParsePosition(0);
+        Date date = sdf.parse( " 2021-10-01 00:00:00 " ,pos);
         try {
             categoryEntityList = categoryMapper.listCategory();
             for (int i = 0; i < categoryEntityList.size(); ++i) {
-                Integer cnt = articleCategoryAssMapper.countArticleByCategoryId(categoryEntityList.get(i).getCategoryId());
-                categoryEntityList.get(i).setArticleCount(cnt);
+                CategoryEntity category = categoryEntityList.get(i);
+                if(category.getCategoryDeletedTime().equals(date)) {
+                    Integer cnt = articleCategoryAssMapper.countArticleByCategoryId(category.getCategoryId());
+                    category.setArticleCount(cnt);
+                    categoryEntityList1.add(category);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            log.error("根据文章获得分类列表失败, cause:{}", e);
+            log.error("获得分类列表失败, cause:{}", e);
         }
-        return categoryEntityList;
+        return categoryEntityList1;
     }
 
     @Override
     public void deleteCategory(Integer id) {
-        try { // 删除自己和关联博文
-            categoryMapper.deleteCategory(id);
+        try { // 删除自己和关联博文!!!!!
+            // categoryMapper.deleteCategory(id);
+            categoryMapper.getCategoryById(id).setCategoryDeletedTime(new Date());
             articleCategoryAssMapper.deleteByCategoryId(id);
         } catch (Exception e) {
             e.printStackTrace();
@@ -81,8 +105,15 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryEntity getCategoryById(Integer id) {
         CategoryEntity categoryEntity = null;
+        // 原始时间 2021-10-01 00:00:00
+        SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
+        ParsePosition pos = new ParsePosition(0);
+        Date date = sdf.parse( " 2021-10-01 00:00:00 " ,pos);
         try {
             categoryEntity = categoryMapper.getCategoryById(id);
+            if(categoryEntity.getCategoryDeletedTime().equals(date)) {
+                categoryEntity = null;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             log.error("根据分类ID获得分类, id:{}, cause:{}", id, e);
@@ -114,8 +145,15 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryEntity getCategoryByName(String name) {
         CategoryEntity categoryEntity = null;
+        // 原始时间 2021-10-01 00:00:00
+        SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
+        ParsePosition pos = new ParsePosition(0);
+        Date date = sdf.parse( " 2021-10-01 00:00:00 " ,pos);
         try {
             categoryEntity = categoryMapper.getCategoryByName(name);
+            if (categoryEntity.getCategoryDeletedTime().equals(date)){
+                categoryEntity = null;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             log.error("获得失败, category:{}, cause:{}", categoryEntity, e);

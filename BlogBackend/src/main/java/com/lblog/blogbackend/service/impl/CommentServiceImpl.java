@@ -12,6 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -40,11 +43,18 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<CommentEntity> listCommentByArticleId(Integer articleId) {
         List<CommentEntity> commentEntities = null;
+        ArticleEntity article = articleMapper.getArticleByStatusAndId(1,articleId);
+        // 原始时间 2021-10-01 00:00:00
+        SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
+        ParsePosition pos = new ParsePosition(0);
+        Date date = sdf.parse( " 2021-10-01 00:00:00 " ,pos);
+        if(article.getArticleDeletedTime().equals(date)) {
         try {
             commentEntities = commentMapper.listCommentByArticleId(articleId);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("根据文章ID获得评论列表失败，articleId:{},cause:{}", articleId, e);
+        }
         }
         return commentEntities;
     }
