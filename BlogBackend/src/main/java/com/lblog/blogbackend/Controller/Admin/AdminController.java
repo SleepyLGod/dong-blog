@@ -1,6 +1,7 @@
 package com.lblog.blogbackend.Controller.Admin;
 
 import com.lblog.blogbackend.mapper.UserMapper;
+import com.lblog.blogbackend.util.EncryptionUtils;
 import org.springframework.ui.Model;
 import cn.hutool.json.JSONObject;
 import com.lblog.blogbackend.constant.enums.UserRoleEnums;
@@ -100,7 +101,7 @@ public class AdminController {
         // user.setUserAvatar("/img/avatar/avatar.png");
         user.setUserName(username);
         user.setUserNickname(nickname);
-        user.setUserPass(password);
+        user.setUserPass(password/*encryptionUtils.strToAES(password)*/);
         user.setUserEmail(email);
         user.setUserTele(tele);
         user.setUserStatus(1);
@@ -147,9 +148,9 @@ public class AdminController {
                 // 有效期为7天
                 nameCookie.setMaxAge(7*24*60*60);
                 pwdCookie .setMaxAge(7*24*60*60);
-                // 在该服务器下，任何项目，任何位置都能获取到cookie
-                nameCookie.setPath("/");
-                pwdCookie.setPath("/");
+//                // 在该服务器下，任何项目，任何位置都能获取到cookie
+//                nameCookie.setPath("/");
+//                pwdCookie.setPath("/");
                 httpServletResponse.addCookie(nameCookie);
                 httpServletResponse.addCookie(pwdCookie);
             }
