@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface TagMapper /*extends BaseMapper<TagEntity> */{
+public interface TagMapper extends BaseMapper<TagEntity> {
     /**
      * 根据ID删除
      *

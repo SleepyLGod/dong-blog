@@ -196,7 +196,7 @@ public class ArticleBackendController {
             categoryList.add(new CategoryEntity(articleParam.getArticleChildCategoryId()));
         }
         article.setCategoryList(categoryList);
-        //填充标签——方法：便历标签表
+        // 填充标签——方法：便历标签表
         List<TagEntity> tagList = new ArrayList<>();
         if (articleParam.getArticleTagIds() != null) {
             for (int i = 0; i < articleParam.getArticleTagIds().size(); i++) {

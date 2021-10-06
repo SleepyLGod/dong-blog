@@ -11,7 +11,7 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface CommentMapper /*extends BaseMapper<CommentEntity>*/ {
+public interface CommentMapper extends BaseMapper<CommentEntity> {
 
     /**
      * 根据ID删除

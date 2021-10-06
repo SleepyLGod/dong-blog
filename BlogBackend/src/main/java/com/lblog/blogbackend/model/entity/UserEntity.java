@@ -81,6 +81,10 @@ public class UserEntity implements Serializable {
     @TableLogic
     private String userTele;
 
+    @TableField(value = "user_deleted_time")
+    @TableLogic
+    private Date userDeletedTime;
+
     /**
      * 文章数量（不是数据库字段）
      */

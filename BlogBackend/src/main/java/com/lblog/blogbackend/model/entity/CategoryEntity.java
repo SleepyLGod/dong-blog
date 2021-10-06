@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @Builder
@@ -38,6 +39,10 @@ public class CategoryEntity implements Serializable {
     @TableField(value = "category_icon")
     @TableLogic
     private String categoryIcon;
+
+    @TableField(value = "category_deleted_time")
+    @TableLogic
+    private Date categoryDeletedTime;
 
     /**
      * 文章数量(非数据库字段)

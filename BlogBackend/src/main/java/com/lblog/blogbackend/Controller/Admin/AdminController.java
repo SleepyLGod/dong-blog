@@ -43,9 +43,6 @@ public class AdminController {
     @Autowired
     private TagService tagService;
 
-    @Autowired
-    private UserMapper userMapper;
-
     /*
 
     // adminPage

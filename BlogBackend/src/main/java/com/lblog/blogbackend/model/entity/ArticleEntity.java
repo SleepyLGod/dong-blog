@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
+@Builder
 @TableName("article")
 public class ArticleEntity implements Serializable{
 
@@ -67,6 +68,10 @@ public class ArticleEntity implements Serializable{
     @TableField(value = "article_thumbnail")
     @TableLogic
     private String articleThumbnail;
+
+    @TableField(value = "article_deleted_time")
+    @TableLogic
+    private Date articleDeletedTime;
 
     @TableLogic
     private UserEntity user;

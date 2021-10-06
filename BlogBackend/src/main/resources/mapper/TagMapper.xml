@@ -5,9 +5,10 @@
         <id column="tag_id" property="tagId" jdbcType="INTEGER" />
         <result column="tag_name" property="tagName" jdbcType="VARCHAR" />
         <result column="tag_description" property="tagDescription" jdbcType="VARCHAR" />
+        <result column="tag_deleted_time" property="tagDeletedTime" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List" >
-        tag_id, tag_name, tag_description
+        tag_id, tag_name, tag_description, tag_deleted_time
     </sql>
 
     <sql id="lhd">tag</sql>
@@ -26,8 +27,8 @@
 
     <insert id="insert" parameterType="com.lblog.blogbackend.model.entity.TagEntity" useGeneratedKeys="true" keyProperty="tagId">
         insert into <include refid="lhd"/>
-        (tag_name, tag_description)
-        values (#{tagName,jdbcType=VARCHAR}, #{tagDescription,jdbcType=VARCHAR})
+        (tag_name, tag_description,tag_deleted_time)
+        values (#{tagName,jdbcType=VARCHAR}, #{tagDescription,jdbcType=VARCHAR},#{tagDeletedTime,jdbcType=TIMESTAMP})
     </insert>
 
 
@@ -39,6 +40,9 @@
             </if>
             <if test="tagDescription != null" >
                 tag_description = #{tagDescription,jdbcType=VARCHAR}
+            </if>
+            <if test="tagDeletedTime != null">
+                tagDeletedTime = #{tagDeletedTime,jdbcType=TIMESTAMP}
             </if>
         </set>
         where tag_id = #{tagId,jdbcType=INTEGER}

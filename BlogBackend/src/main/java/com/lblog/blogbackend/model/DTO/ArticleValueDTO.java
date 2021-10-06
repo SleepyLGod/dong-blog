@@ -23,5 +23,7 @@ public class ArticleValueDTO {
 
     private String articleThumbnail;
 
+    private String articleDeletedTime;
+
     private List<Integer> articleTagIds;
 }

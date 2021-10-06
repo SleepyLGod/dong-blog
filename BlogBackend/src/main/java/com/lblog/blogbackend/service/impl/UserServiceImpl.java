@@ -1,5 +1,7 @@
 package com.lblog.blogbackend.service.impl;
 
+import com.lblog.blogbackend.model.entity.ArticleEntity;
+import com.lblog.blogbackend.model.entity.CommentEntity;
 import com.lblog.blogbackend.model.entity.UserEntity;
 import com.lblog.blogbackend.mapper.ArticleMapper;
 import com.lblog.blogbackend.mapper.CommentMapper;
@@ -64,6 +66,19 @@ public class UserServiceImpl  implements UserService {
                 articleService.deleteArticle(articleId);
             }
         }
+//        Date userDeletedTimeNow = new Date();
+//        UserEntity user = userMapper.getUserById(id);
+//        user.setUserDeletedTime(userDeletedTimeNow);
+//        // CommentEntity comment = commentMapper.ge;
+//        if(articleMapper.listArticleIdsByUserId(id) != null &&
+//            articleMapper.listArticleIdsByUserId(id).size() >0) {
+//            for(Integer articleId : articleMapper.listArticleIdsByUserId(id)) {
+//                ArticleEntity article = articleMapper.getArticleByStatusAndId(0,articleId);
+//                ArticleEntity article1= articleMapper.getArticleByStatusAndId(1,articleId);
+//                article.setArticleDeletedTime(userDeletedTimeNow);
+//                article1.setArticleDeletedTime(userDeletedTimeNow);
+//            }
+//        }
     }
 
     @Override
