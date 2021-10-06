@@ -11,7 +11,7 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface UserMapper extends BaseMapper<UserEntity> {
+public interface UserMapper /*extends BaseMapper<UserEntity>*/ {
 
     /**
      * 根据ID删除用户

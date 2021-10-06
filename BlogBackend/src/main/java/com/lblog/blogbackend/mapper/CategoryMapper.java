@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 @Mapper
-public interface CategoryMapper extends BaseMapper<CategoryEntity> {
+public interface CategoryMapper /*extends BaseMapper<CategoryEntity>*/ {
 
     /**
      * 添加

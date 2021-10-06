@@ -11,7 +11,7 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface ArticleMapper extends BaseMapper<ArticleEntity> {
+public interface ArticleMapper /*extends BaseMapper<ArticleEntity> */{
 
     /**
      * 根据文章ID删除
