@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lblog.blogbackend.mapper.CategoryMapper">
+    <resultMap id="BaseResultMap" type="com.lblog.blogbackend.model.entity.CategoryEntity">
+        <id column="category_id" property="categoryId" jdbcType="INTEGER"/>
+        <result column="category_pid" property="categoryPid" jdbcType="INTEGER"/>
+        <result column="category_name" property="categoryName" jdbcType="VARCHAR"/>
+        <result column="category_description" property="categoryDescription" jdbcType="VARCHAR"/>
+        <result column="category_order" property="categoryOrder" jdbcType="INTEGER"/>
+        <result column="category_icon" property="categoryIcon" jdbcType="VARCHAR"/>
+        <result column="category_deleted_time" property="categoryDeletedTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="lhd">category</sql>
+
+    <sql id="Base_Column_List">
+        category_id, category_pid, category_name, category_description, category_order, category_icon, category_deleted_time
+    </sql>
+
+
+    <insert id="insert" parameterType="com.lblog.blogbackend.model.entity.CategoryEntity" useGeneratedKeys="true" keyProperty="categoryId">
+        insert into
+        <include refid="lhd"/>
+        (category_pid, category_name,category_description, category_order, category_icon, category_deleted_time)
+        values (#{categoryPid,jdbcType=INTEGER}, #{categoryName,jdbcType=VARCHAR},
+        #{categoryDescription,jdbcType=VARCHAR}, #{categoryOrder,jdbcType=INTEGER},
+        #{categoryIcon,jdbcType=VARCHAR}, #{categoryDeletedTime,jdbcType=TIMESTAMP})
+    </insert>
+
+
+    <update id="update" parameterType="com.lblog.blogbackend.model.entity.CategoryEntity">
+        update
+        <include refid="lhd"/>
+        <set>
+            <if test="categoryPid != null">category_pid = #{categoryPid,jdbcType=INTEGER},</if>
+            <if test="categoryName != null">category_name = #{categoryName,jdbcType=VARCHAR},</if>
+            <if test="categoryDescription != null">category_description = #{categoryDescription,jdbcType=VARCHAR},</if>
+            <if test="categoryOrder != null">category_order = #{categoryOrder,jdbcType=INTEGER},</if>
+            <if test="categoryIcon != null">category_icon = #{categoryIcon,jdbcType=VARCHAR},</if>
+            <if test="categoryDeletedTime != null">category_deleted_time = #{categoryDeletedTime,jdbcType=TIMESTAMP}</if>
+        </set>
+        where category_id = #{categoryId,jdbcType=INTEGER}
+    </update>
+
+
+    <!--获得分类总数-->
+    <select id="countCategory" resultType="Integer">
+        SELECT COUNT(*) FROM
+        <include refid="lhd"/>
+    </select>
+
+
+    <select id="listCategory" resultType="com.lblog.blogbackend.model.entity.CategoryEntity">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        <include refid="lhd"/>
+        order by category_order DESC,category_id ASC
+    </select>
+
+    <select id="getCategoryById" parameterType="Integer" resultType="com.lblog.blogbackend.model.entity.CategoryEntity">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        <include refid="lhd"/>
+        WHERE
+        category.category_id=#{value}
+    </select>
+
+
+    <!--删除分类-->
+    <delete id="deleteCategory" parameterType="Integer">
+        DELETE FROM
+        <include refid="lhd"/>
+        WHERE category_id=#{value}
+    </delete>
+
+    <!--根据父分类找子分类-->
+    <select id="findChildCategory" parameterType="Integer"
+            resultType="com.lblog.blogbackend.model.entity.CategoryEntity">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        `category`
+        WHERE
+        category_pid=#{id}
+    </select>
+
+    <!--根据分类名查找分类-->
+    <select id="getCategoryByName" parameterType="String" resultType="com.lblog.blogbackend.model.entity.CategoryEntity">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        <include refid="lhd"/>
+        WHERE category_name=#{value}
+        limit 1
+    </select>
+</mapper>
