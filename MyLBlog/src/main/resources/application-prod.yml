@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    name: defaultDataSource
+    url: jdbc:mysql://127.0.0.1:3306/l_blog?serverTimezone=Asia/Shanghai
+    username: root
+    password: LHD20020516lhd-odin
+
+#logging:
+#  level:
+#    root: info
+#    com.dian.kidpose: info

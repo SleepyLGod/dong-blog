@@ -1,0 +1,23 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: mylblog
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: flag
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  configuration:
+    auto-mapping-behavior: partial
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#jwt:
+#  tokenHeader: Authorization
+#  secret: kidpose-secret
