@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lhd.mylblog.modules.admin.mapper.ArticleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lhd.mylblog.modules.admin.model.Article">
+        <id column="article_id" property="articleId" />
+        <result column="article_user_id" property="articleUserId" />
+        <result column="article_title" property="articleTitle" />
+        <result column="article_content" property="articleContent" />
+        <result column="article_views" property="articleViews" />
+        <result column="article_comment_count" property="articleCommentCount" />
+        <result column="article_like_count" property="articleLikeCount" />
+        <result column="article_create_time" property="articleCreateTime" />
+        <result column="article_update_time" property="articleUpdateTime" />
+        <result column="article_is_comment" property="articleIsComment" />
+        <result column="article_thumbnail" property="articleThumbnail" />
+        <result column="article_status" property="articleStatus" />
+        <result column="article_order" property="articleOrder" />
+        <result column="article_deleted_time" property="articleDeletedTime" />
+    </resultMap>
+
+</mapper>

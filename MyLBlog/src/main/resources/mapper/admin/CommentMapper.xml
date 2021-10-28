@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lhd.mylblog.modules.admin.mapper.CommentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lhd.mylblog.modules.admin.model.Comment">
+        <id column="comment_id" property="commentId" />
+        <result column="comment_pid" property="commentPid" />
+        <result column="comment_pname" property="commentPname" />
+        <result column="comment_article_id" property="commentArticleId" />
+        <result column="comment_author_name" property="commentAuthorName" />
+        <result column="comment_author_email" property="commentAuthorEmail" />
+        <result column="comment_author_url" property="commentAuthorUrl" />
+        <result column="comment_author_avatar" property="commentAuthorAvatar" />
+        <result column="comment_content" property="commentContent" />
+        <result column="comment_agent" property="commentAgent" />
+        <result column="comment_IP" property="commentIp" />
+        <result column="comment_create_time" property="commentCreateTime" />
+        <result column="comment_role" property="commentRole" />
+        <result column="comment_user_id" property="commentUserId" />
+    </resultMap>
+
+</mapper>
