@@ -10,7 +10,6 @@
         <result column="comment_article_id" property="commentArticleId" />
         <result column="comment_author_name" property="commentAuthorName" />
         <result column="comment_author_email" property="commentAuthorEmail" />
-        <result column="comment_author_url" property="commentAuthorUrl" />
         <result column="comment_author_avatar" property="commentAuthorAvatar" />
         <result column="comment_content" property="commentContent" />
         <result column="comment_agent" property="commentAgent" />
@@ -19,5 +18,154 @@
         <result column="comment_role" property="commentRole" />
         <result column="comment_user_id" property="commentUserId" />
     </resultMap>
+
+    <select id="getCommentById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        comment_id, comment_pid, comment_pname, comment_article_id, comment_author_name,
+        comment_author_email, comment_author_avatar, comment_content, comment_agent,
+        comment_IP,comment_create_time, comment_role,comment_user_id
+        from
+        comment
+        where comment_id = #{commentId}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from
+        comment
+        where comment_id = #{commentId}
+    </delete>
+
+    <delete id="deleteByUserId">
+        delete from
+        comment
+        WHERE comment_user_id = #{userId}
+    </delete>
+
+    <delete id="deleteByArticleId">
+        delete from
+        comment
+        WHERE comment_article_id = #{articleId}
+    </delete>
+
+    <insert id="insert" parameterType="com.lhd.mylblog.modules.admin.model.Comment" useGeneratedKeys="true"
+            keyProperty="commentId">
+        insert into
+        comment
+        (comment_pid, comment_pname, comment_article_id,
+        comment_author_name, comment_author_email,
+        comment_author_avatar, comment_content, comment_agent,
+        comment_IP, comment_create_time, comment_role, comment_user_id)
+        values
+        (#{commentPid}, #{commentPname}, #{commentArticleId},
+        #{commentAuthorName}, #{commentAuthorEmail},
+        #{commentAuthorAvatar}, #{commentContent},
+        #{commentAgent}, #{commentIp},
+        #{commentCreateTime}, #{commentRole},
+        #{commentUserId})
+    </insert>
+
+    <update id="update" parameterType="com.lhd.mylblog.modules.admin.model.Comment">
+        update
+        comment
+        <set>
+            <if test="commentPid != null">comment_pid = #{commentPid},</if>
+            <if test="commentPname != null">comment_pname = #{commentPname},</if>
+            <if test="commentArticleId != null">comment_article_id = #{commentArticleId},</if>
+            <if test="commentAuthorName != null">comment_author_name = #{commentAuthorName},</if>
+            <if test="commentAuthorEmail != null">comment_author_email = #{commentAuthorEmail},</if>
+            <if test="commentContent != null">comment_content = #{commentContent},</if>
+            <if test="commentAgent != null">comment_agent = #{commentAgent},</if>
+            <if test="commentIp != null">comment_IP = #{commentIp},</if>
+            <if test="commentCreateTime != null">comment_create_time = #{commentCreateTime},</if>
+            <if test="commentAuthorAvatar != null">comment_author_avatar = #{commentAuthorAvatar},</if>
+            <if test="commentRole != null">comment_role = #{commentRole},</if>
+            <if test="commentUserId != null">comment_user_id = #{commentUserId},</if>
+            <!--            <if test="commentDeletedTime != null">commentDeletedTime = #{commentDeletedTime}</if>-->
+        </set>
+        where comment_id = #{commentId}
+    </update>
+
+
+    <select id="listCommentByArticleId" resultType="com.lhd.mylblog.modules.admin.model.Comment">
+        SELECT
+        comment_id, comment_pid, comment_pname, comment_article_id, comment_author_name,
+        comment_author_email, comment_author_avatar, comment_content, comment_agent,
+        comment_IP,comment_create_time, comment_role,comment_user_id
+        FROM
+        comment
+        WHERE
+        comment_article_id = #{id}
+        ORDER BY comment_id ASC
+    </select>
+
+
+    <!--获取评论列表-->
+    <select id="listComment" resultType="com.lhd.mylblog.modules.admin.model.Comment">
+        SELECT
+        comment_id, comment_pid, comment_pname, comment_article_id, comment_author_name,
+        comment_author_email, comment_author_avatar, comment_content, comment_agent,
+        comment_IP,comment_create_time, comment_role,comment_user_id
+        FROM
+        comment
+        <where>
+            <if test="userId != null">
+                comment_user_id = #{userId}
+            </if>
+        </where>
+        ORDER BY comment_id DESC
+    </select>
+
+    <select id="getReceiveComment" resultType="com.lhd.mylblog.modules.admin.model.Comment">
+        SELECT
+        comment_id, comment_pid, comment_pname, comment_article_id, comment_author_name,
+        comment_author_email, comment_author_avatar, comment_content, comment_agent,
+        comment_IP,comment_create_time, comment_role,comment_user_id
+        FROM
+        comment
+        <where>
+            comment_article_id IN (
+            <foreach collection="list" item="item" separator=",">
+                #{item}
+            </foreach>
+            )
+        </where>
+        ORDER BY comment_id DESC
+    </select>
+
+
+    <!--统计评论数-->
+    <select id="countComment" parameterType="Long" resultType="Integer">
+        SELECT count(*) FROM
+        comment
+    </select>
+
+    <!--获得最近评论，访客的评论-->
+    <select id="listRecentComment" parameterType="Long" resultType="com.lhd.mylblog.modules.admin.model.Comment">
+        SELECT
+        comment_id, comment_pid, comment_pname, comment_article_id, comment_author_name,
+        comment_author_email, comment_author_avatar, comment_content, comment_agent,
+        comment_IP,comment_create_time, comment_role,comment_user_id
+        FROM
+        comment
+        <where>
+            <if test="userId != null">
+                comment_user_id = #{userId}
+            </if>
+        </where>
+        ORDER BY comment_id DESC
+        LIMIT#{limit}
+    </select>
+
+    <select id="listChildComment" resultType="com.lhd.mylblog.modules.admin.model.Comment">
+        SELECT
+        comment_id, comment_pid, comment_pname, comment_article_id, comment_author_name,
+        comment_author_email, comment_author_avatar, comment_content, comment_agent,
+        comment_IP,comment_create_time, comment_role,comment_user_id
+        FROM
+        comment
+        WHERE
+        comment_pid=#{id}
+    </select>
+
 
 </mapper>

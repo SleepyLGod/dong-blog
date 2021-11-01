@@ -10,4 +10,70 @@
         <result column="tag_deleted_time" property="tagDeletedTime" />
     </resultMap>
 
+    <sql id="Base_Column_List" >
+        tag_id, tag_name, tag_description, tag_deleted_time
+    </sql>
+
+
+    <select id="getTagById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+            tag_id, tag_name, tag_description, tag_deleted_time
+        from tag
+        where tag_id = #{tagId}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long" >
+        delete from
+        tag
+        where
+        tag_id = #{tagId}
+    </delete>
+
+    <insert id="insert" parameterType="com.lhd.mylblog.modules.admin.model.Tag" useGeneratedKeys="true" keyProperty="tagId">
+        insert into
+        tag
+        (tag_name, tag_description,tag_deleted_time)
+        values
+        (#{tagName}, #{tagDescription},#{tagDeletedTime})
+    </insert>
+
+    <update id="update" parameterType="com.lhd.mylblog.modules.admin.model.Tag" >
+        update
+        tag
+        <set >
+            <if test="tagName != null" >
+                tag_name = #{tagName},
+            </if>
+            <if test="tagDescription != null" >
+                tag_description = #{tagDescription}
+            </if>
+            <if test="tagDeletedTime != null">
+                tagDeletedTime = #{tagDeletedTime}
+            </if>
+        </set>
+        where tag_id = #{tagId}
+    </update>
+
+    <!--获得标签列表-->
+    <select id="listTag"  resultType="com.lhd.mylblog.modules.admin.model.Tag">
+        SELECT
+            tag_id, tag_name, tag_description, tag_deleted_time
+        FROM tag
+    </select>
+
+    <!--获得标签总数-->
+    <select id="countTag" resultType="Integer">
+        SELECT COUNT(*) FROM tag
+    </select>
+
+    <!--根据标签名获取标签-->
+    <select id="getTagByName" parameterType="String" resultType="com.lhd.mylblog.modules.admin.model.Tag">
+        SELECT
+            tag_id, tag_name, tag_description, tag_deleted_time
+        FROM
+        tag
+        WHERE tag_name=#{tagName}
+        limit 1
+    </select>
+
 </mapper>

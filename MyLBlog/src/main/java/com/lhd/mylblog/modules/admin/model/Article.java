@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -93,6 +95,13 @@ public class Article implements Serializable {
      * 博文删除时间
      */
     private Date articleDeletedTime;
+
+
+    private User user;
+
+    private List<Tag> tagList;
+
+    private List<Category> categoryList;
 
 
 }

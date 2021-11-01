@@ -1,5 +1,6 @@
 package com.lhd.mylblog.modules.admin.model;
 
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
@@ -59,5 +60,39 @@ public class Category implements Serializable {
      */
     private Date categoryDeletedTime;
 
+    /**
+     * 文章数量(非数据库字段)
+     */
+    private Integer articleCount;
+
+    public Category(Long categoryId, Long categoryPid, String categoryName, String categoryDescription, Integer categoryOrder, String categoryIcon,Integer articleCount) {
+        this.categoryId = categoryId;
+        this.categoryPid = categoryPid;
+        this.categoryName = categoryName;
+        this.categoryDescription = categoryDescription;
+        this.categoryOrder = categoryOrder;
+        this.categoryIcon = categoryIcon;
+        this.articleCount = articleCount;
+    }
+
+    public Category(Long categoryId, String categoryName) {
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+    }
+
+    public Category(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public Category() {}
+
+    /**
+     * 未分类
+     *
+     * @return 分类
+     */
+    public static Category Default() {
+        return new Category(100000000L, "未分类");
+    }
 
 }

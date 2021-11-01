@@ -13,7 +13,6 @@
         <result column="avatar" property="avatar" />
         <result column="register_time" property="registerTime" />
         <result column="last_login_time" property="lastLoginTime" />
-        <result column="url" property="url" />
         <result column="status" property="status" />
         <result column="user_role" property="userRole" />
         <result column="birth" property="birth" />
@@ -21,5 +20,134 @@
         <result column="tele" property="tele" />
         <result column="user_deleted_time" property="userDeletedTime" />
     </resultMap>
+
+    <select id="getUserById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        id, user_name, password, nickname, email, avatar, ip,
+        register_time, last_login_time, status, user_role, birth, age, tele,user_deleted_time
+        from
+        user
+        <where>
+            id = #{id}
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from
+        user
+        where id = #{id}
+    </delete>
+
+    <insert id="insert" parameterType="com.lhd.mylblog.modules.admin.model.User" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        user
+        (id, user_name, password, nickname, email, avatar, ip,
+        register_time, last_login_time, status, user_role, birth, age, tele,user_deleted_time)
+        values
+        (#{id}, #{userName}, #{password},
+        #{nickname}, #{email},#{avatar},
+        #{ip}, #{registerTime}, #{lastLoginTime},
+        #{status}, #{userRole}, #{birth},
+        #{age}, #{tele}, #{userDeletedTime})
+    </insert>
+
+    <update id="update" parameterType="com.lhd.mylblog.modules.admin.model.User">
+        update
+        user
+        <set>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="nickname != null">nickname = #{nickname},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="avatar != null">avatar = #{avatar},</if>
+            <if test="ip != null">ip = #{ip},</if>
+            <if test="registerTime != null">register_time = #{registerTime},</if>
+            <if test="lastLoginTime != null">last_login_time = #{lastLoginTime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="role != null">user_role = #{userRole},</if>
+            <if test="birth != null">birth = #{birth},</if>
+            <if test="age != null">age = #{age}</if>
+            <if test="tele != null">tele = #{tele}</if>
+            <if test="userDeletedTime != null">user_deleted_time = #{userDeletedTime}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--用户列表查询-->
+    <select id="listUser" parameterType="com.lhd.mylblog.modules.admin.model.User" resultMap="BaseResultMap">
+        SELECT
+        id, user_name, password, nickname, email, avatar, ip,
+        register_time, last_login_time, status, user_role, birth, age, tele,user_deleted_time
+        FROM
+        user
+        ORDER BY `status` ASC
+    </select>
+
+    <!--根据用户名或邮箱获得用户-->
+    <select id="getUserByNameOrEmail" parameterType="String" resultMap="BaseResultMap">
+        SELECT
+        id, user_name, password, nickname, email, avatar, ip,
+        register_time, last_login_time, status, user_role, birth, age, tele,user_deleted_time
+        FROM
+        user
+        <where>
+            user.user_name = #{userName} OR user.email = #{email}
+        </where>
+        status>0
+        limit 1
+    </select>
+
+    <!--根据用户名查用户-->
+    <select id="getUserByName" parameterType="String" resultType="com.lhd.mylblog.modules.admin.model.User">
+        select
+        id, user_name, password, nickname, email, avatar, ip,
+        register_time, last_login_time, status, user_role, birth, age, tele,user_deleted_time
+        from
+        user
+        <where>
+        user.user_name=#{userName}
+        </where>
+        limit 1
+    </select>
+
+    <!--根据Email查用户-->
+    <select id="getUserByEmail" parameterType="String" resultType="com.lhd.mylblog.modules.admin.model.User">
+        SELECT
+        id, user_name, password, nickname, email, avatar, ip,
+        register_time, last_login_time, status, user_role, birth, age, tele,user_deleted_time
+        FROM
+        user
+        <where>
+            email=#{email}
+        </where>
+        limit 1
+    </select>
+
+    <!--根据用户名和电话号码查询用户-->
+    <select id="getUserByNameOrTele" parameterType="String" resultType="com.lhd.mylblog.modules.admin.model.User">
+        SELECT
+        id, user_name, password, nickname, email, avatar, ip,
+        register_time, last_login_time, status, user_role, birth, age, tele,user_deleted_time
+        FROM
+        user
+        <where>
+            user_name=#{userName} OR tele=#{tele}
+        </where>
+        limit 1
+    </select>
+
+    <!--根据tele查用户-->
+    <select id="getUserByTele" parameterType="String" resultType="com.lhd.mylblog.modules.admin.model.User">
+        SELECT
+        id, user_name, password, nickname, email, avatar, ip,
+        register_time, last_login_time, status, user_role, birth, age, tele,user_deleted_time
+        FROM
+        user
+        <where>
+            tele=#{tele}
+        </where>
+        limit 1
+    </select>
+
 
 </mapper>

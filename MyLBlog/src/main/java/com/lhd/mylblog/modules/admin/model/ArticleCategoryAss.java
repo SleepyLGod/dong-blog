@@ -30,5 +30,12 @@ public class ArticleCategoryAss implements Serializable {
      */
     private Long categoryId;
 
+    public ArticleCategoryAss() {
+    }
+
+    public ArticleCategoryAss(Long articleId, Long categoryId) {
+        this.articleId = articleId;
+        this.categoryId = categoryId;
+    }
 
 }

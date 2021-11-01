@@ -2,6 +2,7 @@ package com.lhd.mylblog.modules.admin.mapper;
 
 import com.lhd.mylblog.modules.admin.model.ArticleCategoryAss;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author generator
  * @since 2021-10-28
  */
+@Mapper
 public interface ArticleCategoryAssMapper extends BaseMapper<ArticleCategoryAss> {
 
 }

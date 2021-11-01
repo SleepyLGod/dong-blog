@@ -30,5 +30,11 @@ public class ArticleTagAss implements Serializable {
      */
     private Long tagId;
 
+    public ArticleTagAss() {
+    }
 
+    public ArticleTagAss(Long articleId, Long tagId) {
+        this.articleId = articleId;
+        this.tagId = tagId;
+    }
 }

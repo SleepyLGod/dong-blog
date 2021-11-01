@@ -1,5 +1,6 @@
 package com.lhd.mylblog.modules.admin.model;
 
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
@@ -44,5 +45,22 @@ public class Tag implements Serializable {
      */
     private Date tagDeletedTime;
 
+    /**
+     * 文章数量(不是数据库字段)
+     */
+    private Integer articleCount;
+
+    public Tag () {}
+
+    public Tag(Long tagId) {
+        this.tagId = tagId;
+    }
+
+    public Tag(Long tagId, String tagName, String tagDescription, Integer articleCount) {
+        this.tagId = tagId;
+        this.tagName = tagName;
+        this.tagDescription = tagDescription;
+        this.articleCount = articleCount;
+    }
 
 }

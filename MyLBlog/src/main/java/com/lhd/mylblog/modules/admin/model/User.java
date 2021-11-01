@@ -1,5 +1,6 @@
 package com.lhd.mylblog.modules.admin.model;
 
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
@@ -70,11 +71,6 @@ public class User implements Serializable {
     private Date lastLoginTime;
 
     /**
-     * 主页url
-     */
-    private String url;
-
-    /**
      * 状态
      */
     private Integer status;
@@ -104,5 +100,8 @@ public class User implements Serializable {
      */
     private Date userDeletedTime;
 
-
+    /**
+     * 文章数量（不是数据库字段）
+     */
+    private Integer articleCount;
 }

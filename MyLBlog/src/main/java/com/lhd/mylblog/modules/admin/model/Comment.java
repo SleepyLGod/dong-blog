@@ -55,10 +55,6 @@ public class Comment implements Serializable {
      */
     private String commentAuthorEmail;
 
-    /**
-     * 评论人个人主页
-     */
-    private String commentAuthorUrl;
 
     /**
      * 评论人头像
@@ -96,5 +92,9 @@ public class Comment implements Serializable {
      */
     private Long commentUserId;
 
+    /**
+     * 非数据库字段
+     */
+    private Article article;
 
 }
