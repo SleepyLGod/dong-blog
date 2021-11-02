@@ -1,4 +1,4 @@
-package com.lhd.mylblog.common.config;
+package com.lhd.mylblog.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;

@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: mylblog
+  profiles:
+    active: prod
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/*.xml
