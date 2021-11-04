@@ -16,6 +16,7 @@ import java.util.List;
  * @author generator
  * @since 2021-10-28
  */
+
 @Mapper
 public interface ArticleMapper extends BaseMapper<Article> {
     /**

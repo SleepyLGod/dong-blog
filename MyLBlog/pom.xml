@@ -43,12 +43,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--shiro-redis的starter包-->
-        <dependency>
-            <groupId>org.crazycake</groupId>
-            <artifactId>shiro-redis-spring-boot-starter</artifactId>
-            <version>3.2.1</version>
-        </dependency>
+<!--        &lt;!&ndash;shiro-redis的starter包&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.crazycake</groupId>-->
+<!--            <artifactId>shiro-redis-spring-boot-starter</artifactId>-->
+<!--            <version>3.2.1</version>-->
+<!--        </dependency>-->
         <!--Hutool Java工具包-->
         <dependency>
             <groupId>cn.hutool</groupId>

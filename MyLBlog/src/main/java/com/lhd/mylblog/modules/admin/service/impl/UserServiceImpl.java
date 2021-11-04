@@ -1,5 +1,8 @@
 package com.lhd.mylblog.modules.admin.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.EncryptUtils;
+import com.lhd.mylblog.common.api.ResultCode;
+import com.lhd.mylblog.common.exception.Asserts;
 import com.lhd.mylblog.modules.admin.mapper.ArticleMapper;
 import com.lhd.mylblog.modules.admin.mapper.CommentMapper;
 import com.lhd.mylblog.modules.admin.model.Article;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -65,7 +69,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         User user = userMapper.getUserById(id);
         // 原始时间 2021-10-01 00:00:00
         SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd HH:mm:ss " );
-        ParsePosition pos = new ParsePosition(0);
+        ParsePosition pos = new  ParsePosition(0);
         Date date = sdf.parse( " 2021-10-01 00:00:00 " ,pos);
         if(!user.getUserDeletedTime().equals(date)) {
             user = null;
@@ -99,11 +103,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public User insertUser(User user) {
-        // 更新用户登录时间
-        user.setRegisterTime(new Date());
         // 添加用户
-        userMapper.insert(user);
-        return user;
+        // userMapper.insert(user);
+        if (save(user)) {
+            return user;
+        } else {
+            Asserts.fail(ResultCode.FAILED);
+            return null;
+        }
     }
 
     @Override

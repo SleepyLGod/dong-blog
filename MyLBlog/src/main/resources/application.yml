@@ -20,6 +20,6 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
-#jwt:
-#  tokenHeader: Authorization
-#  secret: kidpose-secret
+jwt:
+  tokenHeader: Authorization
+  secret: supperblog
