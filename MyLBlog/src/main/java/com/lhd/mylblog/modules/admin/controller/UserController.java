@@ -93,7 +93,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @ApiOperation(value = "用户注册", tags = {"user"}, notes = "用户登录接口必须是post请求")
+    @ApiOperation(value = "用户注册", tags = {"user"}, notes = "接口必须是post请求")
     @PostMapping("/register")
     public CommonResult registerVerify(@ApiParam(name = "user", value = "注册用户信息，必传", required = true) @RequestBody User user) {
         // check:
@@ -133,6 +133,12 @@ public class UserController {
         }
     }
 
+    @PostMapping("/info_update")
+    @ApiOperation(value = "用户信息更改", tags = {"user"}, notes = "接口必须是post请求")
+    public CommonResult userInfoUpdate(@ApiParam(name = "user", required = true) @RequestBody User user) {
+        userService.updateUser(user);
+        return CommonResult.success(ResultCode.SUCCESS);
+    }
 
 
 
