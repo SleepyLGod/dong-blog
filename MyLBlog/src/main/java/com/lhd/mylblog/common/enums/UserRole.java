@@ -35,4 +35,13 @@ public enum UserRole {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public static UserRole getByValue(final String value) {
+        for(final UserRole p : UserRole.values()) {
+            if(p.value == value) {
+                return p;
+            }
+        }
+        return null;
+    }
 }

@@ -93,8 +93,9 @@ public class UserController {
      * @param user
      * @return
      */
+    @ApiOperation(value = "用户注册", tags = {"user"}, notes = "用户登录接口必须是post请求")
     @PostMapping("/register")
-    public CommonResult registerVerify(@RequestBody User user) {
+    public CommonResult registerVerify(@ApiParam(name = "user", value = "注册用户信息，必传", required = true) @RequestBody User user) {
         // check:
         String userName = user.getUserName();
         String userNickname = user.getNickname();
