@@ -17,7 +17,8 @@ public enum ResultCode implements ErrorCode{
     EMAIL_ALREADY_EXISTS(107,"电子邮箱已存在"),
     TELE_ALREADY_EXISTS(108,"电话号码已存在"),
     CODE_INVALID(109,"密码错误"),
-    USER_INVALID(110,"用户被封号");
+    USER_INVALID(110,"用户被封号"),
+    ARTICLE_NOT_PUBLISHED(111, "草稿未发表");
 
     private final long code;
     private final String message;

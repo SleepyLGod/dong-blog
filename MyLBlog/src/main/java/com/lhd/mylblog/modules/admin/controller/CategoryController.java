@@ -8,6 +8,7 @@ import com.lhd.mylblog.modules.admin.service.ArticleService;
 import com.lhd.mylblog.modules.admin.service.CategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +39,7 @@ public class CategoryController {
      */
     @ApiOperation(value = "添加分类", tags = {"category"})
     @PostMapping(value = "/insert")
-    public CommonResult insertCategorySubmit(Category category)  {
+    public CommonResult insertCategorySubmit(@ApiParam(name = "category", required = true) @RequestBody Category category)  {
         categoryService.insertCategory(category);
         List<Category> categoryList = categoryService.listCategoryWithCount();
         String result = categoryList.toString();
@@ -54,7 +55,7 @@ public class CategoryController {
      */
     @ApiOperation(value = "删除分类", tags = {"category"})
     @PostMapping(value = "/delete/{id}")
-    public CommonResult deleteCategory(@PathVariable("id") Long id) {
+    public CommonResult deleteCategory(@ApiParam(name = "categoryId", required = true) @PathVariable("id") Long id) {
         // 禁止删除有文章的分类
         Long count = articleService.countArticleByCategoryId(id);
         if (count == 0) {
@@ -71,7 +72,7 @@ public class CategoryController {
      */
     @ApiOperation(value = "编辑分类提交", tags = {"category"})
     @PostMapping(value = "/edit")
-    public CommonResult editCategorySubmit(Category category)  {
+    public CommonResult editCategorySubmit(@ApiParam(name = "category", required = true) @RequestBody Category category)  {
         categoryService.updateCategory(category);
         return CommonResult.success(ResultCode.SUCCESS);
     }
