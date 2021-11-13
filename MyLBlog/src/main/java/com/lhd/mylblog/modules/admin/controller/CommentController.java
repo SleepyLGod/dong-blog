@@ -134,6 +134,7 @@ public class CommentController {
             return CommonResult.failed(ResultCode.ARTICLE_NOT_PUBLISHED);
         }
         User user = userMapper.selectById(jwtUtils.getUserIdFromToken(request));
+        //过滤字符，防止XSS攻击
         comment.setCommentContent(HtmlUtil.escape(comment.getCommentContent()));
         comment.setCommentAuthorName(user.getNickname());
         comment.setCommentAuthorEmail(user.getEmail());

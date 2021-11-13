@@ -4,7 +4,7 @@ package com.lhd.mylblog.common.api;
 public enum ResultCode implements ErrorCode{
 
     /**
-     *
+     * enums:
      */
     SUCCESS(1, "操作成功"),
     FAILED(-1, "操作失败"),
