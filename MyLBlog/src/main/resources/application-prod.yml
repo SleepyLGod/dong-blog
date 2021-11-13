@@ -5,12 +5,19 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/l_blog?serverTimezone=Asia/Shanghai
     username: root
     password: LHD20020516lhd-odin
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    password: lhd20020516
-
-#logging:
-#  level:
-#    root: info
-#    com.dian.kidpose: info
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379
+#    password: lhd20020516
+#    database: 0
+#    jedis:
+#      pool:
+#        max-active: 100
+#        max-idle: 3
+#        max-wait: -1
+#        min-idle: 0
+#    timeout: 1000
+#  data:
+#    redis:
+#      repositories:
+#        enabled: false

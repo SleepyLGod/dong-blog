@@ -8,4 +8,37 @@
         <result column="tag_id" property="tagId" />
     </resultMap>
 
+    <insert id="insert" parameterType="java.lang.Long" >
+        insert into
+        article_tag_ass
+        (article_id, tag_id)
+        values (#{articleId}, #{tagId})
+    </insert>
+
+    <delete id="deleteByTagId" parameterType="java.lang.Long" >
+        delete from
+        article_tag_ass
+        where tag_id = #{value}
+    </delete>
+
+    <delete id="deleteByArticleId" parameterType="java.lang.Long" >
+        delete from
+        article_tag_ass
+        where article_id = #{value}
+    </delete>
+
+    <select id="countArticleByTagId" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select count(*) from
+        article_tag_ass
+        where tag_id = #{value}
+    </select>
+
+    <select id="listTagByArticleId" parameterType="java.lang.Long" resultType="com.lhd.mylblog.modules.admin.model.Tag">
+        SELECT tag.* FROM tag, article_tag_ass
+        WHERE
+            article_tag_ass.article_id = #{value}
+            AND
+            article_tag_ass.tag_id = tag.tag_id
+    </select>
+
 </mapper>

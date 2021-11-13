@@ -12,7 +12,6 @@ import com.lhd.mylblog.modules.admin.service.ArticleService;
 import com.lhd.mylblog.modules.admin.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.AccessType;
 import org.springframework.stereotype.Service;
 
 import java.text.ParsePosition;

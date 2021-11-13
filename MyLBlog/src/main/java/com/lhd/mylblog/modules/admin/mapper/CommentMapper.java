@@ -32,6 +32,7 @@ public interface CommentMapper extends BaseMapper<Comment> {
      * @param comment 评论
      * @return 影响行数
      */
+    @Override
     int insert(Comment comment);
 
     /**

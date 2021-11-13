@@ -8,4 +8,68 @@
         <result column="category_id" property="categoryId" />
     </resultMap>
 
+    <insert id="insert">
+        insert into
+        article_category_ass
+        (article_id, category_id)
+        values (#{articleId}, #{categoryId})
+    </insert>
+
+    <delete id="deleteByCategoryId" parameterType="java.lang.Long">
+        delete from
+        article_category_ass
+        where category_id = #{value}
+    </delete>
+
+    <delete id="deleteByArticleId" parameterType="java.lang.Long">
+        delete from
+        article_category_ass
+        where article_id = #{value}
+    </delete>
+
+    <!--    <update id="deleteByArticleId" parameterType="java.lang.Integer">-->
+    <!--       update-->
+    <!--        <include refid="lhd"/>-->
+    <!--        <set>-->
+    <!--            <if test="categoryDeletedTime != null">-->
+    <!--                category_deleted_time = '2021-10-01 00:01:11'-->
+    <!--       -->
+    <!--            </if>-->
+    <!--        </set>-->
+    <!--        where article_id =-->
+    <!--    </update>-->
+
+    <select id="countArticleByCategoryId" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select count(*)
+        from
+        article_category_ass
+        where
+        category_id = #{value}
+    </select>
+
+    <select id="selectCategoryIdByArticleId" parameterType="java.lang.Long" resultType="java.lang.Long">
+        SELECT category_id
+        FROM
+        article_category_ass
+        WHERE article_id = #{value}
+    </select>
+
+
+    <select id="selectArticleIdByCategoryId" parameterType="java.lang.Long" resultType="java.lang.Long">
+        SELECT article_id FROM
+        article_category_ass
+        WHERE category_id = #{value}
+    </select>
+
+    <select id="listCategoryByArticleId" parameterType="java.lang.Long"
+            resultType="com.lhd.mylblog.modules.admin.model.Category">
+        SELECT
+            category.category_id, category.category_pid, category.category_name
+        FROM category, article_category_ass
+        WHERE
+            article_category_ass.article_id = #{value}
+            AND
+            article_category_ass.category_id = category.category_id
+        ORDER BY category.category_pid asc
+    </select>
 </mapper>

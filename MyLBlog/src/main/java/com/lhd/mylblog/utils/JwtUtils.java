@@ -3,7 +3,6 @@
 import com.auth0.jwt.interfaces.Claim;
 import com.lhd.mylblog.common.exception.Asserts;
 import io.jsonwebtoken.*;
-import jodd.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -83,7 +82,7 @@ public class JwtUtils {
      * 从token中取出用户id
      *
      * @param request 前端请求
-     * @return int
+     * @return long
      */
     public long getUserIdFromToken(HttpServletRequest request) {
         String token = request.getHeader(tokenHeader);

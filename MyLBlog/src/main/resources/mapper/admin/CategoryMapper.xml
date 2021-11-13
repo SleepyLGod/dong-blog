@@ -13,4 +13,84 @@
         <result column="category_deleted_time" property="categoryDeletedTime" />
     </resultMap>
 
+    <insert id="insert" parameterType="com.lhd.mylblog.modules.admin.model.Category" useGeneratedKeys="true" keyProperty="categoryId">
+        insert into
+        category (
+        category_pid, category_name,category_description, category_order, category_icon, category_deleted_time
+        )
+        values (
+        #{categoryPid}, #{categoryName},
+        #{categoryDescription}, #{categoryOrder},
+        #{categoryIcon}, #{categoryDeletedTime}
+        )
+    </insert>
+
+
+    <update id="update" parameterType="com.lhd.mylblog.modules.admin.model.Category">
+        update
+        category
+        <set>
+            <if test="categoryPid != null">category_pid = #{categoryPid},</if>
+            <if test="categoryName != null">category_name = #{categoryName},</if>
+            <if test="categoryDescription != null">category_description = #{categoryDescription},</if>
+            <if test="categoryOrder != null">category_order = #{categoryOrder},</if>
+            <if test="categoryIcon != null">category_icon = #{categoryIcon},</if>
+            <if test="categoryDeletedTime != null">category_deleted_time = #{categoryDeletedTime}</if>
+        </set>
+        where category_id = #{categoryId}
+    </update>
+
+
+    <!--获得分类总数-->
+    <select id="countCategory" resultType="Integer">
+        SELECT COUNT(*) FROM
+        category
+    </select>
+
+
+    <select id="listCategory" resultType="com.lhd.mylblog.modules.admin.model.Category">
+        SELECT
+        category_id, category_pid, category_name, category_description, category_order, category_icon, category_deleted_time
+        FROM
+        category
+        order by category_order DESC,category_id ASC
+    </select>
+
+    <select id="getCategoryById" parameterType="java.lang.Long" resultType="com.lhd.mylblog.modules.admin.model.Category">
+        SELECT
+        category_id, category_pid, category_name, category_description, category_order, category_icon, category_deleted_time
+        FROM
+        category
+        WHERE
+        category.category_id=#{value}
+    </select>
+
+
+    <!--删除分类-->
+    <delete id="deleteCategory" parameterType="java.lang.Long">
+        DELETE FROM
+        category
+        WHERE category_id=#{value}
+    </delete>
+
+    <!--根据父分类找子分类-->
+    <select id="findChildCategory" parameterType="java.lang.Long" resultType="com.lhd.mylblog.modules.admin.model.Category">
+        SELECT
+        category_id, category_pid, category_name, category_description, category_order, category_icon, category_deleted_time
+        FROM
+        `category`
+        WHERE
+        category_pid=#{id}
+    </select>
+
+    <!--根据分类名查找分类-->
+    <select id="getCategoryByName" parameterType="String" resultType="com.lhd.mylblog.modules.admin.model.Category">
+        SELECT
+        category_id, category_pid, category_name, category_description, category_order, category_icon, category_deleted_time
+        FROM
+        category
+        WHERE category_name=#{value}
+        limit 1
+    </select>
+
 </mapper>

@@ -1,7 +1,10 @@
 package com.lhd.mylblog.modules.admin.model;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+
+import com.github.jeffreyning.mybatisplus.anno.MppMultiId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -23,11 +26,15 @@ public class ArticleCategoryAss implements Serializable {
     /**
      * 博文ID
      */
+    @MppMultiId
+    @TableField(value = "articleField")
     private Long articleId;
 
     /**
      * 分类ID
      */
+    @MppMultiId
+    @TableField(value = "categoryId")
     private Long categoryId;
 
     public ArticleCategoryAss() {
