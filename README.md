@@ -6,7 +6,7 @@
 --->
 
 + `java`: ` spring-boot` & `mybatis-plus` & `swagger2` & `jwt` & `shiro` or `spring-security`
-+ `databases` : `MySQLl` & `Redis`
++ `databases` : `MySQL` & `Redis`
 + `MQ`: `RabbitMQ`
 
 ### System Design
